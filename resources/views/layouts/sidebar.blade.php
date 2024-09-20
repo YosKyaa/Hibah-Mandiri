@@ -3,7 +3,7 @@
     <div class="app-brand demo ">
         <a href="{{ route('dashboard') }}" class="app-brand-link">
             <span class="app-brand-logo demo" style="margin-left: -10px">
-                <img src="{{ asset('assets/img/CIS.png') }}" height="44">
+                <img src="{{ asset('assets/img/logo_lppm_jgu2.png') }}" height="44">
             </span>
         </a>
 
@@ -128,7 +128,7 @@
                         </li>
                     @endcan
                 </ul>
-                <li class="menu-item {{ request()->segment(1) == 'CMS' ? 'active' : '' }}">
+                <li class="menu-item {{ request()->segment(1) == 'cms' ? 'active' : '' }}">
                     <a href="{{ route('cms.index') }}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-book-reader"></i>
                         <div data-i18n="Dashboards">CMS</div>

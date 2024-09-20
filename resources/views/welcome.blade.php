@@ -36,8 +36,7 @@
         <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
             <a href="" class="logo d-flex align-items-center me-auto">
-                <img src="assets/img/RMC LOGO.png" alt="">
-                <h1 class="sitename">RMC SYSTEM</h1>
+                <img src="assets/img/logo 4.png" alt="">
             </a>
 
             <nav id="navmenu" class="navmenu">
@@ -46,6 +45,7 @@
                     <li><a href="#about">Tentang</a></li>
                     <li><a href="#visi">Visi & Misi</a></li>
                     <li><a href="#struktur">Struktur</a></li>
+                    <li><a href="#berita">Berita</a></li>
                     <li><a href="#contact">Hubugi Kami</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -65,10 +65,8 @@
             </div>
             <div class="container text-center">
                 <div class="d-flex flex-column justify-content-center align-items-center">
-                    <h1 data-aos="fade-up">Welcome to <span>RMC SYSTEM</span></h1>
-                    <p data-aos="fade-up" data-aos-delay="100">Inovasi, Kolaborasi, dan Keunggulan dalam Penelitian<br></p>
-                    <img src="assets/img/RMC LOGO.png" class="img-fluid hero-img" alt="" data-aos="zoom-out"
-                        data-aos-delay="300">
+                    <h1 data-aos="fade-up">Welcome to <span>LPPM JGU</span></h1>
+                    <p data-aos="fade-up" data-aos-delay="100">Dari Ilmu untuk Masyarakat, dari Masyarakat untuk Dunia<br></p>
                 </div>
             </div>
 
@@ -322,6 +320,56 @@
 
         </section><!-- /Testimonials Section -->
 
+        <!-- Berita Section -->
+    <section id="berita" class="services section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Berita</h2>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row g-5">
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item item-cyan position-relative">
+                <div class="col-md-4">
+                    <img src="{{ asset('/assets/img/avatars/user.png') }}" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body" style="font-family: var(--heading-font);">
+                        <h3>Card title</h3>
+                        <p>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <a href="" class="read-more stretched-link">Learn More <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item item-orange position-relative">
+            <div class="col-md-4">
+                    <img src="{{ asset('/assets/img/avatars/user.png') }}" class="img-fluid rounded-start" alt="...">
+            </div>
+                <div class="col-md-8">
+                    <div class="card-body" style="font-family: var(--heading-font);">
+                        <h3>Card title</h3>
+                        <p>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <a href="" class="read-more stretched-link">Learn More <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+          </div><!-- End Service Item -->
+          <a href="#" class="read-moree" style="width: 175px;"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+        </div>
+
+      </div>
+
+    </section><!-- /Services Section -->
+
         <!-- Contact Section -->
         <section id="contact" class="contact section">
 
@@ -386,7 +434,7 @@
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6 footer-about">
                     <a href="" class="logo d-flex align-items-center">
-                        <img src="assets/img/CIS.png" class="img-fluid" alt="">
+                        <img src="assets/img/logo.png" class="img-fluid" alt="">
                     </a>
                     <div class="footer-contact pt-3">
                         <p>Jl. Boulevard Raya No. 2 Grand Depok City</p>
@@ -441,6 +489,7 @@
 
     <!-- Main JS File -->
     <script src="assets/js/welcom.js"></script>
+    <script src="assets/js/welcom2.js"></script>
 
 </body>
 
