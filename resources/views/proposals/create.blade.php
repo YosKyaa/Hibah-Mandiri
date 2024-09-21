@@ -304,10 +304,14 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-sm-6 mb-3">
-                            <label class="form-label mb-1" for="formValidationEmail">Total Dana</label>
-                            <input type="text" class="form-control" id="researchtypesId"
-                                aria-describedby="defaultFormControlHelp" readonly disabled />
+                        <div class="col-sm-6 mb-3 form-password-toggle">
+                            <label class="form-label mb-1" for="formValidationEmail">Total Dana<i
+                                    class="text-danger">*</i></label>
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input type="text" class="form-control" name="total_fund" id="total_fund"
+                                    placeholder="Total Dana" value="{{ old('total_fund') }}">
+                            </div>
                         </div>
                         <div class="col-sm-6 mb-3 form-password-toggle">
                             <label class="form-label mb-1" for="formValidationEmail">Kategori Penelitian<i
@@ -355,6 +359,34 @@
                             <input type="text" class="form-control" name="research_title" id="research_title"
                                 placeholder=" Judul Penelitian" value="{{ old('research_title') }}">
                         </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label mb-1" for="formValidationLastName">Tingkat Kesiapan Teknologi<i
+                                    class="text-danger">*</i></label>
+                            <select class="form-select select2" name="tkt_type" id="tkt_type"
+                                data-placeholder=" Pilih Jenis TKT">
+                                <option value=""> Pilih Jenis TKT </option>
+                                @foreach ($tkttype as $d)
+                                    <option value="{{ $d->id }}"
+                                        {{ $d->id == old('tkt_type') ? 'selected' : '' }}>
+                                        {{ $d->title }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label mb-1" for="formValidationLastName">Target Utama Riset<i
+                                    class="text-danger">*</i></label>
+                            <select class="form-select select2" name="main_research_target" id="main_research_target"
+                                data-placeholder=" Pilih Target Utama Riset">
+                                <option value=""> Target Utama Riset </option>
+                                @foreach ($mainresearch as $d)
+                                    <option value="{{ $d->id }}"
+                                        {{ $d->id == old('main_research_target') ? 'selected' : '' }}>
+                                        {{ $d->title }} | {{ $d->description }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="col-12 d-flex justify-content-between">
                             <button class="btn btn-label-secondary btn-prev" disabled>
                                 <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
@@ -385,34 +417,6 @@
                                 @endforeach
                             </select>
                             <div id="defaultFormControlHelp" class="form-text">Silahkan Pilih Tim Peneliti Max 2.</div>
-                        </div>
-                        <div class="col-sm-6 mb-3">
-                            <label class="form-label mb-1" for="formValidationLastName">Tingkat Kesiapan Teknologi<i
-                                    class="text-danger">*</i></label>
-                            <select class="form-select select2" name="tkt_type" id="tkt_type"
-                                data-placeholder=" Pilih Jenis TKT">
-                                <option value=""> Pilih Jenis TKT </option>
-                                @foreach ($tkttype as $d)
-                                    <option value="{{ $d->id }}"
-                                        {{ $d->id == old('tkt_type') ? 'selected' : '' }}>
-                                        {{ $d->title }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-sm-6 mb-3">
-                            <label class="form-label mb-1" for="formValidationLastName">Target Utama Riset<i
-                                    class="text-danger">*</i></label>
-                            <select class="form-select select2" name="main_research_target" id="main_research_target"
-                                data-placeholder=" Pilih Target Utama Riset">
-                                <option value=""> Target Utama Riset </option>
-                                @foreach ($mainresearch as $d)
-                                    <option value="{{ $d->id }}"
-                                        {{ $d->id == old('main_research_target') ? 'selected' : '' }}>
-                                        {{ $d->title }} | {{ $d->description }}
-                                    </option>
-                                @endforeach
-                            </select>
                         </div>
                         <div class="col-12 d-flex justify-content-between">
                             <button type="button" class="btn btn-primary btn-prev">
@@ -491,6 +495,21 @@
     <script src="{{ asset('assets/vendor/libs/quill/quill.js') }}"></script>
     <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
     <script>
+        document.getElementById('total_fund').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/[^,\d]/g, '').toString();
+            let split = value.split(',');
+            let remainder = split[0].length % 3;
+            let rupiah = split[0].substr(0, remainder);
+            let thousands = split[0].substr(remainder).match(/\d{3}/gi);
+
+            if (thousands) {
+                let separator = remainder ? '.' : '';
+                rupiah += separator + thousands.join('.');
+            }
+
+            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+            e.target.value = rupiah;
+        });
         var quill = new Quill('#editor-container', {
             theme: 'snow'
         });
@@ -660,5 +679,41 @@
                 }
             });
         }
+
+        $(document).ready(function() {
+            if ($('#research_type').val() == '') {
+                $("#tkt_type").prop('disabled', true).attr('data-placeholder',
+                    'Pilih Jenis Penelitian terlebih dahulu');
+            }
+
+            // ketika category dirubah, theme di isi
+
+            $('#research_type').change(function() {
+                var tktTypes = this.value;
+                $("#tkt_type").html('');
+                $.ajax({
+                    url: "{{ route('DOC.get_tkt_types_by_id') }}",
+                    type: "GET",
+                    data: {
+                        id: tktTypes,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        $('#tkt_type').html('<option value="">Select Theme</option>');
+                        $.each(result, function(key, value) {
+                            $("#tkt_type").append('<option value="' + value.id +
+                                '">' + value.title + '</option>');
+                        });
+                        $("#tkt_type").prop('disabled', false).attr('data-placeholder',
+                            'Pilih Jenis TKT');
+                    }
+                });
+            });
+        });
+
     </script>
+
+
+
 @endsection

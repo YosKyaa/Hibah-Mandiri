@@ -13,15 +13,22 @@ class TktTypesSeeder extends Seeder
      */
     public function run(): void
     {
-        $titles = [
-            'TKT 1',
-            'TKT 2',
-            'TKT 3',
+        $data = [
+            ['title' => 'TKT 1', 'research_type_id' => '1'],
+            ['title' => 'TKT 2', 'research_type_id' => '1'],
+            ['title' => 'TKT 3', 'research_type_id' => '1'],
+            ['title' => 'TKT 4',  'research_type_id' => '2'],
+            ['title' => 'TKT 5', 'research_type_id' => '2'],
+            ['title' => 'TKT 6', 'research_type_id' => '2'],
+            ['title' => 'TKT 7', 'research_type_id' => '2'],
+            ['title' => 'TKT 8', 'research_type_id' => '2'],
+            ['title' => 'TKT 9', 'research_type_id' => '2'],
+            ['title' => 'TKT 10', 'research_type_id' => '2'],
         ];
-
-        foreach ($titles as $title) {
+        foreach ($data as $item) {
             TktTypes::create([
-                'title' => $title,
+                'title' => $item['title'],
+                'research_type_id' => $item['research_type_id'],
             ]);
         }
     }

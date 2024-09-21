@@ -14,15 +14,14 @@ class ResearchTypesSeeder extends Seeder
      */
     public function run(): void
     {
-        $data = [
-            [
-                'title' => 'Penelitian Dasar',
-                'total_funds' => 5000000,
-            ],
-
-
-    ];
-
-        DB::table('research_types')->insert($data);
+        $research_types = [
+            'Penelitian Dasar',
+            'Penelitian Terapan',
+        ];
+        foreach ($research_types as $title) {
+            ResearchTypes::create([
+                'title' => $title,
+            ]);
+        }
     }
 }

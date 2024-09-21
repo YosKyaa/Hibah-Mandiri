@@ -48,6 +48,18 @@
                             },
                         },
                     },
+                    tkt_type: {
+                        validators: {
+                            notEmpty: { message: "TKT wajib di isi" },
+                        },
+                    },
+                    main_research_target: {
+                        validators: {
+                            notEmpty: {
+                                message: "Target Utama Riset wajib di isi",
+                            },
+                        },
+                    },
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
@@ -79,16 +91,6 @@
                             notEmpty: {
                                 message: "Tim Penelitian wajib di isi",
                             },
-                        },
-                    },
-                    tkt_type: {
-                        validators: {
-                            notEmpty: { message: "TKT wajib di isi" },
-                        },
-                    },
-                    main_research_target: {
-                        validators: {
-                            notEmpty: { message: "Target Utama Riset wajib di isi" },
                         },
                     },
                 },
@@ -140,21 +142,21 @@
                 }
             });
         }),
-        p.forEach((e) => {
-            e.addEventListener("click", (e) => {
-                switch (a._currentIndex) {
-                    case 2:
-                    case 1:
-                        a.previous();
-                }
+            p.forEach((e) => {
+                e.addEventListener("click", (e) => {
+                    switch (a._currentIndex) {
+                        case 2:
+                        case 1:
+                            a.previous();
+                    }
+                });
+            }),
+            submitButton.addEventListener("click", function () {
+                o.validate().then(function (status) {
+                    if (status === "Valid") {
+                        l.submit();
+                    }
+                });
             });
-        }),
-        submitButton.addEventListener("click", function () {
-            o.validate().then(function (status) {
-                if (status === "Valid") {
-                    l.submit();
-                }
-            });
-        });
     }
 })();

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('tkt_types', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->unsignedBigInteger(column: 'research_type_id');
+            $table->foreign(columns: 'research_type_id')->references('id')->on('research_types');
             $table->timestamps();
         });
     }

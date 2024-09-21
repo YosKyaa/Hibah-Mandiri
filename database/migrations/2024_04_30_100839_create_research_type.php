@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('research_types', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('total_funds');
+            // $table->string('total_funds');
             $table->timestamps();
         });
     }

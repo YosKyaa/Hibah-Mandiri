@@ -91,6 +91,7 @@ Route::group(['prefix' => 'user-proposals'], function () {
 
 Route::get('/get_research_themes_by_id', [UserProposalController::class, 'getResearchThemeById'])->name('DOC.get_research_themes_by_id');
 Route::get('/get_research_topics_by_id', [UserProposalController::class, 'getResearchTopicById'])->name('DOC.get_research_topics_by_id');
+Route::get('/get_tkt_types_by_id', [UserProposalController::class, 'getTktTypesById'])->name('DOC.get_tkt_types_by_id');
 
 Route::group(['prefix' => 'admin'], function () {
 

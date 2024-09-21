@@ -11,5 +11,11 @@ class TktTypes extends Model
     public $fillable = [
         'id',
         'title',
+        'research_type_id'
     ];
+
+    public function researchType()
+    {
+        return $this->belongsTo(ResearchTypes::class, 'research_type_id');
+    }
 }

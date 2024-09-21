@@ -17,4 +17,8 @@ class ResearchTypes extends Model
     {
         return $this->hasMany(Proposal::class, 'research_types_id', 'id');
     }
+    public function tktTypes()
+    {
+        return $this->hasMany(TktTypes::class, 'research_type_id', 'id');
+    }
 }

@@ -92,17 +92,17 @@ class UserProposalController extends Controller
         return response()->json($themes);
     }
 
-    public function getResearchTypeFunds($researchtypesId)
-    {
-        $funds = ResearchTypes::findOrFail($researchtypesId);
-        return response()->json(['total_funds' => $funds->total_funds]);
-    }
-
 
     public function getResearchTopicById(Request $request)
     {
         $topics = ResearchTopics::where('research_theme_id', $request->id)->get();
         return response()->json($topics);
+    }
+
+    public function getTktTypesById(Request $request)
+    {
+        $tktTypes = TktTypes::where('research_type_id', $request->id)->get();
+        return response()->json(data: $tktTypes);
     }
     /**
      * Show the form for creating a new resource.
@@ -130,6 +130,7 @@ class UserProposalController extends Controller
                     'tkt_type' => 'required|exists:tkt_types,id',
                     'main_research_target' => 'required|exists:main_research_targets,id',
                     // 'document' => 'required|mimes:pdf|max:10000', // max 10MB
+                    'total_fund' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
                     'researcher_id' => 'required|array',
                     'researcher_id.*' => 'exists:users,id',
                     'proposal_doc' => 'required|mimes:pdf|max:10000', // max 10MB

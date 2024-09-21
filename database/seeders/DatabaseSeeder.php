@@ -17,10 +17,11 @@ class DatabaseSeeder extends Seeder
         $this->call([PermissionSeeder::class]);
         $this->call([StudyProgramSeeder::class]);
         $this->call([DepartementSeeder::class]);
+        $this->call([ResearchTypesSeeder::class]);
         $this->call([TktTypesSeeder::class]);
         $this->call([MainResearchTargetSeeder::class]);
         $this->call([StatusSeeder::class]);
-        $this->call([ResearchTypesSeeder::class]);
+
         $this->call([ResearchCategoriesSeeder::class]);
         $this->call([BankSeeder::class]);
         $this->call([ResearchThemesSeeder::class]);
