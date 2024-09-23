@@ -309,8 +309,9 @@
                                     class="text-danger">*</i></label>
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
-                                <input type="text" class="form-control" name="total_fund" id="total_fund"
-                                    placeholder="Total Dana" value="{{ old('total_fund') }}">
+                                <input type="number" class="form-control" name="total_fund" min="0"
+                                    step="0.01" placeholder="Masukkan total dana"
+                                    value="{{ old('total_fund') }}">
                             </div>
                         </div>
                         <div class="col-sm-6 mb-3 form-password-toggle">
@@ -416,7 +417,21 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <div id="defaultFormControlHelp" class="form-text">Silahkan Pilih Tim Peneliti Max 2.</div>
+                            <div id="defaultFormControlHelp" class="form-text">Silahkan Pilih Tim Peneliti (Dosen) Max 2.
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-3 form-password-toggle">
+                            <label class="form-label mb-1" for="formValidationEmail">Tim Mahasiswa</label>
+                            <input type="text" class="form-control" name="student_team" id="student_team"
+                                placeholder="Mahasiswa" value="{{ old('student_team') }}">
+                            <div id="defaultFormControlHelp" class="form-text">Tidak Wajib di Isi.</div>
+                        </div>
+                        <div class="col-sm-6 mb-3 form-password-toggle">
+                            <label class="form-label mb-1" for="formValidationEmail">Eksternal</label>
+                            <input type="text" class="form-control" name="external_team" id="external_team"
+                                placeholder="Eksternal" value="{{ old('external_team') }}">
+                            <div id="defaultFormControlHelp" class="form-text">Silahkan diisi jika ada kerjasama dengan
+                                pihak eksternal.</div>
                         </div>
                         <div class="col-12 d-flex justify-content-between">
                             <button type="button" class="btn btn-primary btn-prev">
@@ -441,6 +456,8 @@
                                     class="text-danger">*</i></label>
                             <input class="form-control" name="proposal_doc" type="file" accept=".pdf"
                                 title="PDF">
+                            <div id="defaultFormControlHelp" class="form-text">Unggah Dokumen Proposal, Surat Tugas, dll
+                            </div>
                         </div>
                         <div class="col-sm-12 mb-3">
                             <label class="form-label mb-1" for="notes">Catatan</label>
@@ -495,21 +512,21 @@
     <script src="{{ asset('assets/vendor/libs/quill/quill.js') }}"></script>
     <script src="{{ asset('assets/js/forms-editors.js') }}"></script>
     <script>
-        document.getElementById('total_fund').addEventListener('input', function (e) {
-            let value = e.target.value.replace(/[^,\d]/g, '').toString();
-            let split = value.split(',');
-            let remainder = split[0].length % 3;
-            let rupiah = split[0].substr(0, remainder);
-            let thousands = split[0].substr(remainder).match(/\d{3}/gi);
+        // document.getElementById('total_fund').addEventListener('input', function(e) {
+        //     let value = e.target.value.replace(/[^,\d]/g, '').toString();
+        //     let split = value.split(',');
+        //     let remainder = split[0].length % 3;
+        //     let rupiah = split[0].substr(0, remainder);
+        //     let thousands = split[0].substr(remainder).match(/\d{3}/gi);
 
-            if (thousands) {
-                let separator = remainder ? '.' : '';
-                rupiah += separator + thousands.join('.');
-            }
+        //     if (thousands) {
+        //         let separator = remainder ? '.' : '';
+        //         rupiah += separator + thousands.join('.');
+        //     }
 
-            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
-            e.target.value = rupiah;
-        });
+        //     rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+        //     e.target.value = rupiah;
+        // });
         var quill = new Quill('#editor-container', {
             theme: 'snow'
         });
@@ -711,7 +728,6 @@
                 });
             });
         });
-
     </script>
 
 

@@ -130,7 +130,7 @@ class UserProposalController extends Controller
                     'tkt_type' => 'required|exists:tkt_types,id',
                     'main_research_target' => 'required|exists:main_research_targets,id',
                     // 'document' => 'required|mimes:pdf|max:10000', // max 10MB
-                    'total_fund' => 'required|numeric|regex:/^\d+(\.\d{1,2})?$/',
+                    'total_fund' => 'required|numeric|min:0|max:999999999999999',
                     'researcher_id' => 'required|array',
                     'researcher_id.*' => 'exists:users,id',
                     'proposal_doc' => 'required|mimes:pdf|max:10000', // max 10MB
@@ -145,6 +145,9 @@ class UserProposalController extends Controller
                     'tkt_types_id' => $request->tkt_type,
                     'main_research_targets_id' => $request->main_research_target,
                     'notes' => $request->notes ?? '',
+                    'student_team' => $request->student_team ?? '',
+                    'external_team' => $request->external_team ?? '',
+                    'total_fund' => $request->total_fund,
                     'status_id' => "S00",
                 ]);
 
