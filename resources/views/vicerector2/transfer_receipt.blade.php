@@ -16,6 +16,7 @@
             border-radius: 10px;
         }
     </style>
+@endsection
 
 @section('content')
     <div class="col-xl">
@@ -56,7 +57,8 @@
                             <h6 class="mb-0 text-muted" style="font-size: 15px;">Total Pendanaan Tahap 1</h6>
                             <p><strong><em style="font-size: 18px;" id="seventyPercentDisplay"></em></strong></p>
                         </div>
-                        <div class="col-md-6"> <a href="{{ $documentUrl }}" class="btn btn-primary" target="_blank">Lihat Kontrak</a></div>
+                        <div class="col-md-6"> <a href="{{ $documentUrl }}" class="btn btn-primary" target="_blank">Lihat
+                                Kontrak</a></div>
                     </div>
 
 

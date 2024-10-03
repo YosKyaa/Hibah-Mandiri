@@ -132,11 +132,58 @@
                     <a href="{{ route('cms.index') }}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-book-reader"></i>
                         <div data-i18n="Dashboards">CMS</div>
-                      
+
                     </a>
                 </li>
             </li>
         @endcan
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Ketua LPPM</span>
+        </li>
+    <li class="menu-item {{ request()->segment(1) == 'admin' ? 'open active' : '' }}">
+            <a href="#" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-cog"></i>
+                <div>Manage Proposals</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ request()->segment(2) == 'headoflppm.proposals' ? 'active' : '' }}">
+                    <a href="{{ route('headoflppm.proposals.index') }}" class="menu-link">
+
+                        <div>Data</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->segment(2) == 'addreviewer' ? 'active' : '' }}">
+                    <a href="{{ route('addreviewer.index') }}" class="menu-link">
+
+                        <div>Reviewer</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->segment(2) == 'presentation' ? 'active' : '' }}">
+                    <a href="{{ route('presentation.index') }}" class="menu-link">
+
+                        <div>Presentasi</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->segment(2) == 'fundsfinalization' ? 'active' : '' }}">
+                    <a href="{{ route('fundsfinalization.index') }}" class="menu-link">
+
+                        <div>Finalisasi Dana</div>
+                    </a>
+                </li>
+                <!-- <li class="menu-item {{ request()->segment(2) == 'loa' ? 'active' : '' }}">
+                    <a href="{{ route('loa.index') }}" class="menu-link">
+
+                        <div>LoA & Kontrak</div>
+                    </a>
+                </li> -->
+                <li class="menu-item {{ request()->segment(2) == 'monev' ? 'active' : '' }}">
+                    <a href="{{ route('monev.index') }}" class="menu-link">
+
+                        <div>Verifikasi Monev</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         @can('manage_admin')
         <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">ADMIN</span>

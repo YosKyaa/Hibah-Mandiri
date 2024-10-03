@@ -43,17 +43,14 @@ return new class extends Migration
             $table->uuid('status_id')->nullable();
             $table->foreign('status_id')->references('id')->on('statuses')->nullable();
 
-            $table->boolean('approval_reviewer')->default(false);
+            $table->boolean('is_recommended')->nullable();
 
-            $table->boolean('mark_as_revised_1')->default(false);
-
-            $table->boolean('mark_as_revised_2')->default(false);
+            $table->boolean('mark_as_revised')->default(false);
 
             $table->text('review_notes')->nullable();
 
-            $table->text('review_notes_2')->nullable();
-
             $table->unsignedBigInteger('bank_id')->nullable();
+            
             $table->foreign('bank_id')->references('id')->on('banks')->nullable();
 
             $table->string('bank_account_number')->nullable();

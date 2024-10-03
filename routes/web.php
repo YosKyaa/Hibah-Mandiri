@@ -21,6 +21,7 @@ use App\Http\Controllers\UserAnnouncementController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CmsController;
+use App\Http\Controllers\HeadOfLPPMController;
 use App\Http\Controllers\UserProposalController;
 use App\Http\Controllers\ViceRector1Controller;
 use App\Http\Controllers\ViceRector2Controller;
@@ -147,6 +148,32 @@ Route::group(['prefix' => 'admin'], function () {
     });
 });
 
+
+
+
+Route::group(['prefix' => 'headoflppm'], function () {
+
+    Route::get('/total-null-reviewers', [NotificationAdminController::class, 'getTotalNullReviewers'])->name('getTotalNullReviewers');
+    Route::get('/totalS05Proposals', [NotificationAdminController::class, 'getTotalS05Proposals'])->name('getTotalS05Proposals');
+    Route::get('/total-null-admin-fund-finalization', [NotificationAdminController::class, 'getTotalNullAdminFundFinalization'])->name('getTotalNullAdminFundFinalization');
+
+
+    Route::group(['prefix' => 'proposals'], function () { //manage admin proposal
+        Route::any('/', [HeadOfLPPMController::class, 'index'])->name('headoflppm.proposals.index')->middleware('auth');
+        Route::get('/data', [HeadOfLPPMController::class, 'data'])->name('headoflppm.proposals.data');
+        Route::any('/show/{id}', [HeadOfLPPMController::class, 'show'])->name('headoflppm.proposals.show');
+        Route::get('/revision/{id}', [HeadOfLPPMController::class, 'revision'])->name('headoflppm.revision');
+        Route::put('/update/{id}', [HeadOfLPPMController::class, 'update'])->name('headoflppm.update');
+        Route::get('/download/{id}', [HeadOfLPPMController::class, 'download'])->name('headoflppm.download');
+        Route::post('/approve', [HeadOfLPPMController::class, 'approve'])->name('headoflppm.approve');
+    });
+
+
+});
+
+
+
+
 Route::group(['prefix' => 'reviewer'], function () { //reviewers
     Route::any('/', [ReviewerController::class, 'index'])->name('reviewers.index')->middleware('auth');
     Route::get('/data', [ReviewerController::class, 'data'])->name('reviewers.data');
@@ -162,6 +189,8 @@ Route::group(['prefix' => 'reviewer'], function () { //reviewers
     Route::post('/mark_as_presented', [ReviewerController::class, 'mark_as_presented'])->name('reviewers.mark_as_presented');
     Route::get('/print_pdf/{id}', [ReviewerController::class, 'print_pdf'])->name('print_pdf');
     Route::get('/print_loa/{id}', [ReviewerController::class, 'print_loa'])->name('print_loa');
+    Route::get('/assessment/{id}', [ReviewerController::class, 'assessment'])->name('reviewers.assessment');
+    Route::put('/assessment_update/{id}', [ReviewerController::class, 'assessment_update'])->name('reviewers.assessment_update');
 });
 
 Route::group(['prefix' => 'vicerector1'], function () { //vicerector1

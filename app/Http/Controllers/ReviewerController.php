@@ -3,12 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Mail\LOA;
+use App\Models\Documents;
 use App\Models\Proposal;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Mail;
+use Carbon\Carbon;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
+use Auth;
 use PDF;
+use Illuminate\Support\Facades\Storage;
+
+use DB;
+use Illuminate\Support\Facades\File;
+
 
 class ReviewerController extends Controller
 {
@@ -61,6 +71,8 @@ class ReviewerController extends Controller
             })
             ->make(true);
     }
+
+
 
     public function show($id)
     {
@@ -229,5 +241,60 @@ class ReviewerController extends Controller
         $proposals = Proposal::findOrFail($id);
         $pdf = PDF::loadView('proposals.print_loa', compact('proposals'));
         return $pdf->stream('proposal.pdf');
+    }
+
+    public function assessment($id)
+    {
+        $proposals = Proposal::findOrfail($id);
+        $pdf = PDF::loadView('proposals.print', compact('proposals'));
+        $pdf->save(public_path('proposal.pdf'));
+        $documentUrl = asset('proposal.pdf');
+        $documentPath = public_path('proposal.pdf');
+        return view('reviewers.assessment', compact('proposals', 'documentUrl', 'documentPath'));
+    }
+
+    public function assessment_update(Request $request, $id)
+    {
+        $request->validate([
+            'proposal_doc' => 'required|file|mimes:pdf|max:5120',
+            'is_recommended' => 'required|boolean',
+        ]);
+
+        try {
+            $fileName = "";
+            if ($request->hasFile('proposal_doc')) {
+                $ext = $request->proposal_doc->extension();
+                $name = str_replace(' ', '_', $request->proposal_doc->getClientOriginalName());
+                $fileName = Auth::user()->id . '_' . $name;
+                $folderName = "storage/FILE/assessment/" . Carbon::now()->format('Y/m');
+                $path = public_path() . "/" . $folderName;
+                if (!File::exists($path)) {
+                    File::makeDirectory($path, 0755, true); //create folder
+                }
+                $upload = $request->proposal_doc->move($path, $fileName); //upload file to folder
+                if ($upload) {
+                    $fileName = $folderName . "/" . $fileName;
+                } else {
+                    $fileName = "";
+                }
+            }
+
+            $proposals = Proposal::findOrFail($id);
+            $proposals->update([
+                'status_id' => 'S02',
+                'is_recommended' => $request->is_recommended,
+            ]);
+
+            Documents::create([
+                'proposals_id' => $proposals->id,
+                'proposal_doc' => $fileName,
+                'doc_type_id' => 'DC2',
+                'created_by' => Auth::user()->id,
+            ]);
+
+            return redirect()->route('reviewers.index')->with('success', 'Data berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->route('reviewers.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 }

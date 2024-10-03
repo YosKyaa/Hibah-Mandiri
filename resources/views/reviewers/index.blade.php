@@ -13,14 +13,14 @@
 @endsection
 
 @section('style')
-<style>
-    .layout-page,
+    <style>
+        .layout-page,
         .content-wrapper,
         .content-wrapper>*,
         .layout-menu {
             min-height: unset;
         }
-</style>
+    </style>
 @endsection
 
 @section('content')
@@ -271,52 +271,29 @@
                     },
                     {
                         render: function(data, type, row, meta) {
-                            var html =
-                                `<span class="badge rounded-pill bg-label-${row.statuses.color}">
-                                <span class="badge badge-dot bg-${row.statuses.color} me-1"></span>${row.statuses.status} </span>`;
+                            var html = '';
+                            if (row.is_recommended === null) {
+                                html = '<span class="badge rounded-pill bg-label-secondary">Menunggu Review</span>';
+                            } else if (row.is_recommended === true || row.is_recommended === 1) {
+                                html = '<span class="badge rounded-pill bg-label-success">Rekomendasi</span>';
+                            } else if (row.is_recommended === false || row.is_recommended === 0) {
+                                html = '<span class="badge rounded-pill bg-label-danger">Tidak Di Rekomendasi</span>';
+                            }
                             return html;
                         }
                     },
                     {
                         render: function(data, type, row, meta) {
                             var html = '';
-                            if (row.statuses.id === 'S06') {
+                            if (row.documents && row.documents.some(doc => doc
+                                    .doc_type_id ===
+                                    'DC2')) {
                                 html +=
-                                    `<a class="badge badge-center rounded-pill bg-success" title="Telah Presentasi" style="cursor:pointer" onclick="mark_as_presented(\'` +
-                                    row.id +
-                                    `\')"><i class="bx bx-check" style="color:#ffff"></i></a>`;
-                            } else if (row.mark_as_revisioned_2) {
-                                html +=
-                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('reviewer/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-success" title="Presentasi" style="cursor:pointer" onclick="presentasi(\'${row.id}\')"><i class="bx bx-check" style="color:#ffff"></i></a>
-                                    `;
-                            } else if (row.statuses.id === 'S05' || row.statuses.id === 'S07' || row
-                                .statuses.id === 'S03' || row.statuses.id === 'S04' || row.statuses
-                                .id === 'S08' || row.statuses.id === 'S09' || row.statuses.id ===
-                                'S10') {
-                                html +=
-                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('reviewer/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
-                            } else if (row.mark_as_revised_2) {
-                                html +=
-                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('reviewer/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-success" title="Presentasi" style="cursor:pointer" onclick="presentasi(\'${row.id}\')"><i class="bx bx-check" style="color:#ffff"></i></a>`;
-                            } else if (row.mark_as_revised_1) {
-                                html +=
-                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('reviewer/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-success" title="Presentasi" style="cursor:pointer" onclick="presentasi(\'${row.id}\')"><i class="bx bx-check" style="color:#ffff"></i></a>
-                                     <a class="badge badge-center rounded-pill bg-warning"title="Revisi Kedua" href="{{ url('reviewer/last-revision/${row.id}') }}"><i class="bx bx-revision"  style="color:#ffff"></i></a>`;
-                            } else if (row.statuses.id === 'S03') {
-                                html +=
-                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('reviewer/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
-                            } else if (row.approval_reviewer) {
-                                html +=
-                                    `<a class="badge badge-center rounded-pill bg-success" title="Presentasi" style="cursor:pointer" onclick="presentasi(\'${row.id}\')"><i class="bx bx-check" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-warning"title="Revisi" href="{{ url('reviewer/revision/${row.id}') }}"><i class="bx bx-revision"  style="color:#ffff"></i></a>`;
+                                    `<a  class="badge badge-center rounded-pill bg-warning mb-1" title="Detail Proposal" href="{{ url('reviewer/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
                             } else {
                                 html +=
                                     `<a  class="badge badge-center rounded-pill bg-warning mb-1" title="Detail Proposal" href="{{ url('reviewer/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-success mb-1" title="Disetujui" style="cursor:pointer" onclick="approval_reviewer(\'${row.id}\')"><i class="bx bx-check" style="color:#ffff"></i></a>
-                                     <a class="badge badge-center rounded-pill bg-danger mb-1" title="Ditolak" style="cursor:pointer" onclick="rejectId(\'${row.id}\')"><i class="bx bx-x" style="color:#ffff"></i></a>`;
+                                    <a class="badge badge-center rounded-pill bg-warning"title="Upload form" href="{{ url('reviewer/assessment/${row.id}') }}"><i class="bx bx-upload"  style="color:#ffff"></i></a>`;
                             }
                             return html;
                         },

@@ -67,16 +67,24 @@ class UserRolePermissionSeeder extends Seeder
                 'username' => 'warek2',
             ], $default_user_value));
 
+            $headoflppm = User::create(array_merge([
+                'email' => 'anugerah@gmail.com',
+                'name' => 'anugerah',
+                'username' => 'anugerah',
+            ], $default_user_value));
+
             $role_lecture = Role::create(['name' => 'lecture','color' => '#3490dc','description' => 'lecture only']);
             $role_admin = Role::create(['name' => 'admin', 'color' => '#33d334','description' => 'administator']);
             $role_reviewer = Role::create(['name' => 'reviewer', 'color' => '#38c172','description' => 'reviewer']);
             $role_warek1 = Role::create(['name' => 'warek1', 'color' => '#2112dc','description' => 'warek1']);
             $role_warek2 = Role::create(['name' => 'warek2', 'color' => '#5233dc','description' => 'warek2']);
+            $role_HeadOfLPPM = Role::create(['name' => 'HeadOfLPPM', 'color' => '#FF0000','description' => 'HeadOfLPPM']);
 
             $lecture->assignRole('lecture');
             $lecture1->assignRole('lecture');
             $lecture2->assignRole('lecture');
             $admin->assignRole('admin');
+            $headoflppm->assignRole('HeadOfLPPM');
 
             $warek1->assignRole('warek1');
             $warek2->assignRole('warek2');

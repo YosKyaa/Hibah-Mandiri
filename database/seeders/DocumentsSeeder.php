@@ -17,7 +17,7 @@ class DocumentsSeeder extends Seeder
     {
         $data = [
             ['id' => 'DC1', 'name' => 'Proposal'],
-            ['id' => 'DC2', 'name' => 'LOA'],
+            ['id' => 'DC2', 'name' => 'Assessment'],
             ['id' => 'DC3', 'name' => 'Account Bank Receipt 1'],
             ['id' => 'DC4', 'name' => 'Account Bank Receipt 2'],
             ['id' => 'DC5', 'name' => 'Monev'],

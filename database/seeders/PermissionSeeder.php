@@ -49,6 +49,8 @@ class PermissionSeeder extends Seeder
             ["guard_name" => "web", "name" => "manage_warek1"],
             ["guard_name" => "web", "name" => "manage_warek2"],
             ["guard_name" => "web", "name" => "manage_reviewer"],
+            ["guard_name" => "web", "name" => "manage_headoflppm"],
+
             //tambahkan permissionnya disini
         ];
 
