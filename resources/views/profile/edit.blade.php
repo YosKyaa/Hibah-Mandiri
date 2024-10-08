@@ -23,45 +23,58 @@
         .layout-menu {
             min-height: unset;
         }
+        
     </style>
 @section('content')
-
-<div class="card mb-6">
-      <!-- Account -->
-      <div class="card-body">
-      @if(session('msg'))
-        <div class="alert alert-primary alert-dismissible" role="alert">
-            {{session('msg')}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
-        <div class="d-flex align-items-start align-items-sm-center gap-6 pb-4 border-bottom">
-        @csrf
-                    <div class="mb-2 col-md-2">
-                        @if ($user->image)
-                        <img src="{{ asset($user->image) }}" alt="user-avatar" class="img" id="uploadedAvatar">
-                    @else
-                        <img src="{{ asset('/assets/img/avatars/user.png') }}" alt="user-avatar" class="img"
-                            id="uploadedAvatar">
-                    @endif
-                    </div>
-          <div class="button-wrapper">
-            <label for="image" class="btn btn-primary me-2 mb-4" tabindex="0">
-                <span class="d-none d-sm-block">Upload new photo</span>
-                <i class="bx bx-upload d-block d-sm-none"></i>
-                <input type="file" id="image" name="image" class="account-file-input" hidden="" accept="image/png, image/jpeg">
-                </label>
-                <button type="button" class="btn btn-label-secondary account-image-reset mb-4">
-                    <i class="bx bx-reset d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Reset</span>
-                </button>
-            <div>Allowed JPG, GIF or PNG. Max size of 800K</div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body pt-4">
-        <form action="" method="POST" enctype="multipart/form-data" id="form-add-new-record">
-        <h4>Update Profil</h4>
+        <div class="nav-align-top mb-4">
+    <div class="col-xl-6">
+                    <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+                      <li class="nav-item">
+                        <button
+                          type="button"
+                          class="nav-link active"
+                          role="tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#navs-pills-justified-home"
+                          aria-controls="navs-pills-justified-home"
+                          aria-selected="true"
+                        >
+                          <i class="tf-icons bx bx-user"></i> Personal Info
+                        </button>
+                      </li>
+                      <li class="nav-item">
+                        <button
+                          type="button"
+                          class="nav-link"
+                          role="tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#navs-pills-justified-profile"
+                          aria-controls="navs-pills-justified-profile"
+                          aria-selected="false"
+                        >
+                          <i class="tf-icons bx bx-id-card"></i> Foto Profile
+                        </button>
+                      </li>
+                      <li class="nav-item">
+                        <button
+                          type="button"
+                          class="nav-link"
+                          role="tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#navs-pills-justified-messages"
+                          aria-controls="navs-pills-justified-messages"
+                          aria-selected="false"
+                        >
+                          <i class="tf-icons bx bx bx-dialpad"></i> Password
+                        </button>
+                      </li>
+                    </ul>
+    </div>
+                    <div class="tab-content">
+                      <div class="tab-pane fade show active" id="navs-pills-justified-home" role="tabpanel">
+                      <form action="" method="POST" enctype="multipart/form-data" id="form-add-new-record">
+            <div class="row g-6">
+            <h4>Update Profil</h4>
           <div class="row g-6">
             <div class="col-md-6 fv-plugins-icon-container">
                 <label class="form-label">Nama</label>
@@ -174,42 +187,90 @@
                             @enderror
             </div>
           </div>
-<br>
-          <hr class="my-0">
-          <br>
-          <h4>Ganti Password</h4>
-          <div class="row g-6">
-            <div class="col-md-6">
-                <label class="form-label">Password Baru</label>
-                <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                    name="password" placeholder="Masukkan password baru" />
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Konfirmasi Password Baru</label>
-                <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
-                                    name="password_confirmation" placeholder="Konfirmasi password baru" />
-                                @error('password_confirmation')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-            </div>
-          </div>
-          <br>
-          <div class="mt-6">
+            <br><hr>
+            <div class="pt-6">
             <button type="submit" class="btn btn-primary me-2" onclick="return confirmSubmit(event)">Simpan</button>
             <a class="btn btn-outline-secondary" href="{{ route('dashboard') }}">Kembali</a>
+            </div>
+          </form>
+                      </div>
+                      <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
+                      <div class="row g-6">
+            <div class="card-body">
+      @if(session('msg'))
+        <div class="alert alert-primary alert-dismissible" role="alert">
+            {{session('msg')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+        <div class="d-flex align-items-start align-items-sm-center gap-6 pb-4 border-bottom">
+        @csrf
+                    <div class="mb-2 col-md-2">
+                        @if ($user->image)
+                        <img src="{{ asset($user->image) }}" alt="user-avatar" class="img" id="uploadedAvatar">
+                    @else
+                        <img src="{{ asset('/assets/img/avatars/user.png') }}" alt="user-avatar" class="img"
+                            id="uploadedAvatar">
+                    @endif
+                    </div>
+          <div class="button-wrapper">
+            <label for="image" class="btn btn-primary me-2 mb-4" tabindex="0">
+                <span class="d-none d-sm-block">Upload new photo</span>
+                <i class="bx bx-upload d-block d-sm-none"></i>
+                <input type="file" id="image" name="image" class="account-file-input" hidden="" accept="image/png, image/jpeg">
+                </label>
+                <button type="button" class="btn btn-label-secondary account-image-reset mb-4">
+                    <i class="bx bx-reset d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Reset</span>
+                </button>
+            <div>Allowed JPG, GIF or PNG. Max size of 800K</div>
           </div>
-        <input type="hidden"></form>
+        </div>
       </div>
-      <!-- /Account -->
-    </div>
-
+            </div>
+            <br>
+            <div class="pt-6">
+            <button type="submit" class="btn btn-primary me-2" onclick="return confirmSubmit(event)">Simpan</button>
+            <a class="btn btn-outline-secondary" href="{{ route('dashboard') }}">Kembali</a>
+            </div>
+                      </div>
+                      <div class="tab-pane fade" id="navs-pills-justified-messages" role="tabpanel">
+                      <form action="" method="POST" enctype="multipart/form-data" id="form-add-new-record">
+            <div class="row g-6">
+            <h4>Ganti Password</h4>
+                <div class="row g-6">
+                    <div class="col-md-6">
+                        <label class="form-label">Password Baru</label>
+                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                            name="password" placeholder="Masukkan password baru" />
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Konfirmasi Password Baru</label>
+                        <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
+                                            name="password_confirmation" placeholder="Konfirmasi password baru" />
+                                        @error('password_confirmation')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                    </div>
+                </div>
+            </div>
+            <br><hr>
+            <div class="pt-6">
+            <button type="submit" class="btn btn-primary me-2" onclick="return confirmSubmit(event)">Simpan</button>
+            <a class="btn btn-outline-secondary" href="{{ route('dashboard') }}">Kembali</a>
+            </div>
+          </form>
+                      </div>
+                    </div>
+                  </div>
 @endsection
 
 @section('script')

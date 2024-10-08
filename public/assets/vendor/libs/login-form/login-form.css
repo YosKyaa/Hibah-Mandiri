@@ -130,7 +130,7 @@
     font-weight: 700;
     font-size: 14px;
     letter-spacing: 1.15px;
-    background-color: #e1a440;
+    background-color: #ed2024;
     color: #f9f9f9;
     box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #f9f9f9;
     border: none;
@@ -162,7 +162,7 @@
     transition: 1.25s;
     background-color: #f9f9f9;
     overflow: hidden;
-    box-shadow: 4px 4px 10px #e4a044, -4px -4px 10px #d1d9e6;
+    box-shadow: 4px 4px 10px #ed2024, -4px -4px 10px #d1d9e6;
 }
 
 .switch__circle {
@@ -170,7 +170,7 @@
     width: 500px;
     height: 500px;
     border-radius: 50%;
-    background-color: #e4a044;
+    background-color: #ed2024;
     box-shadow: inset 8px 8px 12px #d1d9e6, inset -8px -8px 12px #f9f9f9;
     bottom: -60%;
     left: -60%;
