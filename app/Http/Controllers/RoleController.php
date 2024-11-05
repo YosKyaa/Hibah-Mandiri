@@ -26,13 +26,14 @@ class RoleController extends Controller
 
      public function __construct() {
         $this->middleware('auth');
+        // $this->middleware('permission:setting/manage_account/roles.read', ['only' => ['index']]);
     }
 
     public function index(Request $request)
     {
         $this->authorize('setting/manage_account/roles.read');
-        if ($request->isMethod('post')) { 
-            $this->validate($request, [ 
+        if ($request->isMethod('post')) {
+            $this->validate($request, [
                 'name'=> ['required', 'string', 'max:255', Rule::unique('roles')],
                 'guard_name'=> ['required']
             ]);
@@ -94,7 +95,7 @@ class RoleController extends Controller
             return redirect()->route('roles.index');
         }
         if ($request->isMethod('post')) {
-            $this->validate($request, [ 
+            $this->validate($request, [
                 'name' => ['required', 'string'],
                 'guard_name' => ['required', 'string'],
             ]);
@@ -129,7 +130,7 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request) 
+    public function destroy(Request $request)
     {
         $this->authorize('setting/manage_account/roles.delete');
         $data = Role::find($request->id);

@@ -80,7 +80,6 @@ class ReviewerController extends Controller
             'proposalTeams.researcher' => function ($query) {
                 $query->select('id', 'username', 'image');
             },
-
             'reviewer' => function ($query) {
                 $query->select('id', 'username', 'image');
             },
@@ -88,7 +87,7 @@ class ReviewerController extends Controller
         $documentPath = $proposals->documents->first()->proposal_doc;
         $documentUrl = url($documentPath);
         $user = User::select('image');
-        return view('proposals.show', compact('proposals', 'documentUrl', 'user'));
+        return view('reviewers.show', compact('proposals', 'documentUrl', 'user'));
     }
 
     // Lolos Proposal
@@ -245,13 +244,15 @@ class ReviewerController extends Controller
 
     public function assessment($id)
     {
-        $proposals = Proposal::findOrfail($id);
-        $pdf = PDF::loadView('proposals.print', compact('proposals'));
-        $pdf->save(public_path('proposal.pdf'));
-        $documentUrl = asset('proposal.pdf');
-        $documentPath = public_path('proposal.pdf');
-        return view('reviewers.assessment', compact('proposals', 'documentUrl', 'documentPath'));
+        $proposals = Proposal::with('documents')->findOrFail($id);
+        $documentPath = $proposals->documents->first()->proposal_doc;
+        $documentUrl = url($documentPath);
+
+        // Path dan URL untuk file PDF `form_review_hibah.pdf`
+        $pdfFilePath = url('storage/formtemplate/form_review_hibah.pdf');
+        return view('reviewers.assessment', compact('proposals', 'documentUrl','pdfFilePath'));
     }
+
 
     public function assessment_update(Request $request, $id)
     {
@@ -259,6 +260,10 @@ class ReviewerController extends Controller
             'proposal_doc' => 'required|file|mimes:pdf|max:5120',
             'is_recommended' => 'required|boolean',
         ]);
+
+        if (!$request->hasFile('proposal_doc')) {
+            return redirect()->back()->with('errror', 'Proposal document is required.');
+        }
 
         try {
             $fileName = "";

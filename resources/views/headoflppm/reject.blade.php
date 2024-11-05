@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Revisi Anggaran')
+@section('title', 'Tolak Proposal')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/quill.css') }}">
@@ -30,13 +30,13 @@
     <div class="col-xl">
         <div class="card mb-3 p-4">
             <div class="card-header justify-content-between align-items-center">
-                <h3 class="mb-0">Berikan Catatan untuk Revisi Anggaran Proposal</h3>
-                <span class="text-muted">Silahkan berikan catatan revisi anggaran proposal di bawah ini.</span>
+                <h3 class="mb-0">Berikan Catatan untuk Menolak Proposal</h3>
+                <span class="text-muted">Silahkan berikan catatan untuk menolak proposal di bawah ini.</span>
             </div>
             <hr class="my-0">
             <div class="card-body">
                 <form id="form-add-new-record" method="POST" enctype="multipart/form-data"
-                    action="{{ route('headoflppm.update', $proposal->id) }}">
+                    action="{{ route('headoflppm.rejectUpdate', $proposal->id) }}">
                     @csrf
                     @method('PUT')
                     <div class="row">

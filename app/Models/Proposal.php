@@ -38,6 +38,7 @@ class Proposal extends Model
         'bank_account_name',
         'monev_comment',
         'is_recommended',
+        'reject_notes',
     ];
 
     public function scopeFilter($query, array $filters)

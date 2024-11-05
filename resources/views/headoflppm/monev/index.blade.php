@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Manajemen Proposal Ketua LPPM')
+@section('title', 'Manajemen Monev Ketua LPPM')
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bs-stepper/bs-stepper.css') }}">
@@ -28,23 +28,7 @@
         .layout-menu {
             min-height: unset;
         }
-
-        table.dataTable th {
-            vertical-align: middle;
-        }
-
-        table.dataTable th:nth-child(2) {
-            max-width: 150px;
-        }
-
-        /* table.dataTable th {
-                                white-space: nowrap;
-                                text-overflow: ellipsis;
-                                overflow: hidden;
-                                word-wrap: break-word;
-                            } */
     </style>
-
 @endsection
 
 @section('content')
@@ -53,19 +37,21 @@
     <div class="app-academy">
         <div class="card p-0 mb-2">
             <div class="card-body d-flex flex-column flex-md-row justify-content-between p-0 pt-4">
-                <div class="app-academy-md-25 card-body py-0">
+                {{-- <div class="app-academy-md-25 card-body py-0">
                     {{-- <img src="" class="img-fluid app-academy-img-height scaleX-n1-rtl" alt="Bulb in hand"
                         data-app-light-img="illustrations/bulb-light.png" data-app-dark-img="illustrations/bulb-dark.png"
                         height="90"> --}}
-                </div>
+                {{-- </div> --}}
                 <div class="app-academy-md-50 card-body d-flex align-items-md-center flex-column text-md-center">
                     <h2 class="card-title mb-4 lh-sm px-md-5 text-center ">
-                        <strong>Halaman Manajemen.</strong>
+                        <strong>Halaman Manajemen Monev.</strong>
                         <span class="text-primary fw-medium text-nowrap">Ketua LPPM</span>.
                     </h2>
                     <p class="mb-4">
-                        Proses persetujuan untuk Ketua LPPM melibatkan pengelolaan dan peninjauan proposal. Sebagai
-                        Ketua LPPM, Anda memiliki wewenang untuk menyetujui atau menolak proposal penelitian.
+                        Halaman ini digunakan untuk manajemen Monitoring dan Evaluasi (Monev) serta memverifikasi hasil
+                        Monev.
+                        Sebagai Ketua LPPM, Anda memiliki wewenang untuk memverifikasi hasil Monev dari berbagai proposal
+                        penelitian.
                     </p>
                 </div>
                 {{-- <div class="app-academy-md-25 d-flex align-items-end justify-content-end">
@@ -149,13 +135,10 @@
                                 <tr>
                                     <th width="20px">No.</th>
                                     <th data-priority="1">Peneliti</th>
-                                    <th>Tim Peneliti</th>
-                                    <th data-priority="3" style="width: 50%;">Judul</th>
-                                    <th>Kategori</th>
-                                    <th style="width: 10%;">TKT</th>
-                                    <th style="width: 10%;">Target Utama Riset</th>
-                                    <th>Status</th>
-                                    <th data-priority="4"></th>
+                                    <th data-priority="5">Judul</th>
+                                    <th data-priority="3">Catatan Monev</th>
+                                    {{-- <th data-priority="4">Status</th> --}}
+                                    <th></th>
                                     <th data-priority="2" style="width: 10%;">Aksi</th>
                                 </tr>
                             </thead>
@@ -165,38 +148,6 @@
             </div>
         </div>
     </div>
-
-    {{-- <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel"><i><b>Berikan Catatan Revisi Anggaran</b></i></h4>
-                    <a href="" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    <form id="upload-form" method="POST" action="{{ route('headoflppm.update', $proposal->id) }}"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group mb-3">
-                            <label for="review_notes" class="form-label large-text"><b>Comment</b></label>
-                            <textarea class="form-control" id="modal-review_notes" name="review_notes" rows="3"
-                                placeholder="MAX 350 karakter..."></textarea>
-                            <i class="text-danger"><b>* Please comment on why you disagree with the above
-                                    standards.</b></i>
-                        </div>
-                        <div class="text-end" id="button-container">
-                            <button class="btn btn-primary me-1" type="submit" name="action"
-                                value="Revised">Revision</button>
-                            <a href="" class="btn btn-outline-secondary">Back</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 @endsection
 
 
@@ -213,31 +164,10 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if (session('msg'))
         <script type="text/javascript">
+            //swall message notification
             $(document).ready(function() {
-                Swal.fire({
-                    text: `{!! session('msg') !!}`,
-                    icon: "info"
-                });
-            });
-        </script>
-    @endif
-    @if (session('success'))
-        <script type="text/javascript">
-            $(document).ready(function() {
-                Swal.fire({
-                    text: `{!! session('success') !!}`,
-                    icon: "success"
-                });
-            });
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script type="text/javascript">
-            $(document).ready(function() {
-                Swal.fire({
-                    text: `{!! session('error') !!}`,
-                    icon: "error"
+                swal(`{!! session('msg') !!}`, {
+                    icon: "info",
                 });
             });
         </script>
@@ -264,19 +194,6 @@
             })(jQuery);
         }, 350);
     </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Menangani klik tombol submit untuk Revised
-            document.getElementById('submitButton').addEventListener('click', function(event) {
-                // Mencegah form dari pengiriman default
-                event.preventDefault();
-
-                // Menampilkan modal
-                $('#uploadModal').modal('show');
-            });
-        });
-    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             var table = $('#datatable').DataTable({
@@ -290,7 +207,7 @@
                     url: "{{ asset('assets/vendor/libs/datatables/id.json') }}"
                 },
                 ajax: {
-                    url: "{{ route('headoflppm.proposals.data') }}",
+                    url: "{{ route('monev.data') }}",
                     data: function(d) {
                         d.select_category = $('#select_category').val(),
                             d.select_tkt_type = $('#select_tkt_type').val(),
@@ -322,72 +239,37 @@
                     {
                         render: function(data, type, row, meta) {
                             var html =
-                                '<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">';
-                            if (row.proposal_teams && row.proposal_teams.length > 0) {
-                                row.proposal_teams.forEach(function(team) {
-                                    if (team.researcher) {
-                                        var imageUrl = team.researcher.image ? team
-                                            .researcher.image :
-                                            "{{ asset('/assets/img/avatars/user.png') }}";
-                                        html +=
-                                            '<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="' +
-                                            team.researcher.name + '">';
-                                        html += '<img src="' + imageUrl +
-                                            '" alt="Avatar" class="rounded-circle">';
-                                        html += '</li>';
-                                    }
-                                });
-                            }
-                            html += '</ul>';
+                                `<a href="${row.documents && row.documents.length > 0 ? row.documents[0].proposal_doc : '#'}" style="color: primary;">${row.research_title}</a>`;
                             return html;
                         }
                     },
                     {
                         render: function(data, type, row, meta) {
-                            var html =
-                                `<a href="${row.documents[0].proposal_doc}" style="color: primary;">${row.research_title}</a>`;
-                            return html;
-                        }
-                    },
-                    {
-                        render: function(data, type, row, meta) {
-                            var html = row.research_topic.research_theme.research_category.name;
-                            return html;
-                        }
-                    },
-                    {
-                        render: function(data, type, row, meta) {
-                            var html = row.tkt_type.title;
-                            return html;
-                        }
-                    },
-                    {
-                        render: function(data, type, row, meta) {
-                            var html = row.main_research_target.title;
-                            return html;
-                        }
-                    },
+                            // Create a temporary element to safely handle HTML content
+                            var tempElement = document.createElement("div");
+                            tempElement.innerHTML = row.monev_comment;
 
-                    {
-                        render: function(data, type, row, meta) {
-                            var html =
-                                `<span class="badge rounded-pill bg-label-${row.statuses.color}">
-                                <span class="badge badge-dot bg-${row.statuses.color} me-1"></span>${row.statuses.status} </span>`;
-                            return html;
+                            // Use textContent to get only the plain text (no HTML)
+                            return tempElement.textContent ? tempElement.textContent : '-';
                         }
                     },
+                    // {
+                    //     render: function(data, type, row, meta) {
+                    //         var html =
+                    //             `<span class="badge rounded-pill bg-label-${row.statuses.color}">
+                    //             <span class="badge badge-dot bg-${row.statuses.color} me-1"></span>${row.statuses.status} </span>`;
+                    //         return html;
+                    //     }
+                    // },
                     {
                         render: function(data, type, row, meta) {
                             var html = '';
-                            if (row.is_recommended === null) {
+                            if (row.verif_monev === true || row.verif_monev === 1) {
                                 html =
-                                    '<span class="badge rounded-pill bg-label-secondary">Menunggu Review</span>';
-                            } else if (row.is_recommended === true || row.is_recommended === 1) {
+                                    '<span class="badge rounded-pill bg-label-success">Terverifikasi</span>';
+                            } else if (row.verif_monev === false || row.verif_monev === 0) {
                                 html =
-                                    '<span class="badge rounded-pill bg-label-success">Rekomendasi</span>';
-                            } else if (row.is_recommended === false || row.is_recommended === 0) {
-                                html =
-                                    '<span class="badge rounded-pill bg-label-danger">Tidak Di Rekomendasi</span>';
+                                    '<span class="badge rounded-pill bg-label-secondary">Belum Direview</span>';
                             }
                             return html;
                         }
@@ -395,48 +277,13 @@
                     {
                         render: function(data, type, row, meta) {
                             var html = '';
-                            if (row.statuses.id === 'S04' || row.statuses.id === 'S05' || row
-                                .statuses.id === 'S06' || row.statuses.id === 'S07' || row.statuses
-                                .id === 'S08' || row.statuses.id === 'S09' || row.statuses.id ===
-                                'S10' || row.statuses.id === 'S11' || row.statuses.id === 'S12') {
+                            if (row.verif_monev === false || row.verif_monev === 0) {
                                 html +=
-                                    `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
-                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
-                                            <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('headoflppm/proposals/show/${row.id}') }}">
-                                                <i class="bx bx-show" style="color:#ffff"></i>
-                                            </a>
-                                        </li>
-                                    </ul>`;
-                            } else if (row.review_notes) {
-                                html +=
-                                    `<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                                     <div class="dropdown-menu">
-                                       <a class="dropdown-item" href="{{ url('headoflppm/proposals/show/${row.id}') }}"><i class="bx bx-show me-2"></i>Detail Proposal</a>
-                                       <a class="dropdown-item" href="{{ url('headoflppm/proposals/download/${row.id}') }}"><i class="bx bx-download me-2"></i>Unduh Hasil Penilaian</a>
-                                       <a class="dropdown-item text-danger" onclick="disapprove(${row.id})"><i class="bx bx-x me-2"></i>Tolak</a>
-                                       <a class="dropdown-item" onclick="approve(${row.id})"><i class="bx bx-check me-2"></i>Setujui</a>
-                                     </div>`;
-                            } else if (row.is_recommended !== null) {
-                                html +=
-                                    `<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                                     <div class="dropdown-menu">
-                                       <a class="dropdown-item" href="{{ url('headoflppm/proposals/show/${row.id}') }}"><i class="bx bx-show me-2"></i>Detail Proposal</a>
-                                       <a class="dropdown-item" href="{{ url('headoflppm/proposals/download/${row.id}') }}"><i class="bx bx-download me-2"></i>Unduh Hasil Penilaian</a>
-                                       <a class="dropdown-item" href="{{ url('headoflppm/proposals/revision/${row.id}') }}"><i class="bx bx-revision me-2"></i>Revisi</a>
-                                       <a class="dropdown-item text-danger" href="{{ url('headoflppm/proposals/reject/${row.id}') }}"><i class="bx bx-x me-2"></i>Tolak</a>
-                                       <a class="dropdown-item" onclick="approve(${row.id})"><i class="bx bx-check me-2"></i>Setujui</a>
-
-                                     </div>`;
+                                    `<a class="badge badge-center rounded-pill bg-warning mb-1" title="Detail Proposal" href="{{ url('headoflppm/proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
+                                    <a class="badge badge-center rounded-pill bg-success" title="Verifikasi" href="{{ url('headoflppm/monev/review/${row.id}') }}"><i class="bx bx-check" style="color:#ffff"></i></a>`;
                             } else {
                                 html +=
-                                    `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
-                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
-                                            <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('headoflppm/proposals/show/${row.id}') }}">
-                                                <i class="bx bx-show" style="color:#ffff"></i>
-                                            </a>
-                                        </li>
-                                    </ul>`;
-
+                                    `<a class="badge badge-center rounded-pill bg-warning mb-1" title="Detail Proposal" href="{{ url('headoflppm/proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
                             }
                             return html;
                         },

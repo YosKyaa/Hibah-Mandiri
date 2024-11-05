@@ -18,13 +18,16 @@ class StatusSeeder extends Seeder
             ['id' => 'S00', 'status' => 'Draf','color' => 'warning'],
             ['id' => 'S01', 'status' => 'Pengajuan','color' => 'info'],
             ['id' => 'S02', 'status' => 'Menunggu review','color' => 'warning'],
-            ['id' => 'S03', 'status' => 'Rekomendasi','color'=>'success'],
-            ['id' => 'S04', 'status' => 'Tidak Rekomendasi','color'=>'warning'],
-            ['id' => 'S05', 'status' => 'Revisi','color'=>'secondary'],
-            ['id' => 'S06', 'status' => 'Pengajuan ditolak' ,'color' => 'danger'],
-            ['id' => 'S07', 'status' => 'Pengajuan ditolak' ,'color' => 'success'],
-            ['id' => 'S08', 'status' => 'Menunggu Jadwal Presentasi','color' => 'dark'],
-            ['id' => 'S09', 'status' => 'Presentasi','color' => 'dark'],
+            ['id' => 'S03', 'status' => 'Menunggu Review Revisi','color'=>'success'],
+            ['id' => 'S04', 'status' => 'Revisi','color'=>'secondary'],
+            ['id' => 'S05', 'status' => 'Pengajuan ditolak' ,'color' => 'danger'],
+            ['id' => 'S06', 'status' => 'Pengajuan disetujui' ,'color' => 'success'],
+            ['id' => 'S07', 'status' => 'Pencairan Dana Tahap 1','color' => 'info'],
+            ['id' => 'S08', 'status' => 'Pencairan Dana Tahap 2','color' => 'info'],
+            ['id' => 'S09', 'status' => 'Pencairan Dana Tahap 1 Telah diterima','color' => 'success'],
+            ['id' => 'S10', 'status' => 'Pencairan Dana Tahap 2 Telah diterima','color' => 'success'],
+            // ['id' => 'S11', 'status' => '','color' => 'dark'],
+            // ['id' => 'S11', 'status' => 'Presentasi','color' => 'dark'],
         ];
 
         foreach ($data as $item) {

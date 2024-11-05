@@ -111,7 +111,7 @@
     <div class="card mb-3 ">
         <div class="card-body">
             <div class="card-header justify-content-between align-items-center">
-                <h2 class="mb-0"><strong>Halaman Manajemen Pengajuan</strong></h2>
+                <h2 class="mb-0"><strong>Halaman Manajemen Pengajuan Hibah Mandiri</strong></h2>
                 @if ($proposals->isEmpty())
                     <span class="text-muted">Silahkan ajukan proposal anda!</span>
                 @elseif ($proposals->last()->status_id == 'S04')
@@ -134,49 +134,7 @@
                                 Mohon segera melakukan revisi. Proposal Anda membutuhkan perbaikan sebelum dapat melanjutkan
                                 proses selanjutnya.
                                 <br>
-                               Catatan Reviewer: {!! $proposal->review_notes !!}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-    @endforeach
-
-    @foreach ($proposals as $proposal)
-    @if ($proposal->review_notes_2 &&
-                !in_array($proposal->status_id, [ 'S02','S05', 'S06', 'S07', 'S08', 'S09', 'S10']))
-        <div class="row g-6 mb-3">
-            <div class="col-md-12 col-xl-12">
-                <div class="card bg-warning text-white">
-                    <div class="card-body">
-                        <h5 class="card-title text-white">Mohon Segera Melakukan Revisi! </h5>
-                        <p class="card-text">
-                            Mohon segera melakukan revisi. Proposal Anda membutuhkan perbaikan sebelum dapat melanjutkan
-                            proses selanjutnya.
-                            <br>
-                           Catatan Reviewer: {!! $proposal->review_notes_2 !!}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-@endforeach
-
-    @foreach ($proposals as $proposal)
-        @if ($proposal->presentation_date && !in_array($proposal->status_id, ['S04', 'S07', 'S08', 'S09', 'S10']))
-            <div class="row g-6 mb-3">
-                <div class="col-md-12 col-xl-12">
-                    <div class="card bg-info text-white">
-                        <div class="card-body">
-                            <h5 class="card-title text-white">Jadwal Presentasi</h5>
-                            <p class="card-text">
-                                Presentasi akan dilaksanakan pada
-                                {{ $proposal->presentation_date ? \Carbon\Carbon::parse($proposal->presentation_date)->format('d F Y') : 'Tanggal tidak tersedia' }}
-                                pukul
-                                {{ $proposal->presentation_time ? \Carbon\Carbon::parse($proposal->presentation_time)->format('H:i') : 'Waktu tidak tersedia' }}
-                                WIB.
+                                Catatan Reviewer: {!! $proposal->review_notes !!}
                             </p>
                         </div>
                     </div>
@@ -186,10 +144,8 @@
     @endforeach
 
 
-
-
     @foreach ($proposals as $proposal)
-        @if ($proposal->approval_vice_rector_2 === 1 && !$proposal->bank_id)
+        @if ($proposal->approval_head_of_lppm === 1 && !$proposal->bank_id)
             <div class="row g-6 mb-3">
                 <div class="col-md-12 col-xl-12">
                     <div class="card bg-warning text-white">
@@ -310,7 +266,7 @@
                                 fill-rule="evenodd" />
                         </svg>
                     </span>
-                    <span class="bs-stepper-label">Pesentasi</span>
+                    <span class="bs-stepper-label">Penilaian</span>
                 </button>
             </div>
             <div class="line">
@@ -351,7 +307,16 @@
             <div class="step" data-target="#checkout-confirmation">
                 <button type="button" class="step-trigger" id="Step-4" aria-selected="false">
                     <span class="bs-stepper-icon">
-                    <svg width="800px" height="800px" viewBox="0 0 1024 1024" fill="#000000" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M300 462.4h424.8v48H300v-48zM300 673.6H560v48H300v-48z" fill="" /><path d="M818.4 981.6H205.6c-12.8 0-24.8-2.4-36.8-7.2-11.2-4.8-21.6-11.2-29.6-20-8.8-8.8-15.2-18.4-20-29.6-4.8-12-7.2-24-7.2-36.8V250.4c0-12.8 2.4-24.8 7.2-36.8 4.8-11.2 11.2-21.6 20-29.6 8.8-8.8 18.4-15.2 29.6-20 12-4.8 24-7.2 36.8-7.2h92.8v47.2H205.6c-25.6 0-47.2 20.8-47.2 47.2v637.6c0 25.6 20.8 47.2 47.2 47.2h612c25.6 0 47.2-20.8 47.2-47.2V250.4c0-25.6-20.8-47.2-47.2-47.2H725.6v-47.2h92.8c12.8 0 24.8 2.4 36.8 7.2 11.2 4.8 21.6 11.2 29.6 20 8.8 8.8 15.2 18.4 20 29.6 4.8 12 7.2 24 7.2 36.8v637.6c0 12.8-2.4 24.8-7.2 36.8-4.8 11.2-11.2 21.6-20 29.6-8.8 8.8-18.4 15.2-29.6 20-12 5.6-24 8-36.8 8z" fill="" /><path d="M747.2 297.6H276.8V144c0-32.8 26.4-59.2 59.2-59.2h60.8c21.6-43.2 66.4-71.2 116-71.2 49.6 0 94.4 28 116 71.2h60.8c32.8 0 59.2 26.4 59.2 59.2l-1.6 153.6z m-423.2-47.2h376.8V144c0-6.4-5.6-12-12-12H595.2l-5.6-16c-11.2-32.8-42.4-55.2-77.6-55.2-35.2 0-66.4 22.4-77.6 55.2l-5.6 16H335.2c-6.4 0-12 5.6-12 12v106.4z" fill="" /></svg>
+                        <svg width="800px" height="800px" viewBox="0 0 1024 1024" fill="#000000" class="icon"
+                            version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M300 462.4h424.8v48H300v-48zM300 673.6H560v48H300v-48z" fill="" />
+                            <path
+                                d="M818.4 981.6H205.6c-12.8 0-24.8-2.4-36.8-7.2-11.2-4.8-21.6-11.2-29.6-20-8.8-8.8-15.2-18.4-20-29.6-4.8-12-7.2-24-7.2-36.8V250.4c0-12.8 2.4-24.8 7.2-36.8 4.8-11.2 11.2-21.6 20-29.6 8.8-8.8 18.4-15.2 29.6-20 12-4.8 24-7.2 36.8-7.2h92.8v47.2H205.6c-25.6 0-47.2 20.8-47.2 47.2v637.6c0 25.6 20.8 47.2 47.2 47.2h612c25.6 0 47.2-20.8 47.2-47.2V250.4c0-25.6-20.8-47.2-47.2-47.2H725.6v-47.2h92.8c12.8 0 24.8 2.4 36.8 7.2 11.2 4.8 21.6 11.2 29.6 20 8.8 8.8 15.2 18.4 20 29.6 4.8 12 7.2 24 7.2 36.8v637.6c0 12.8-2.4 24.8-7.2 36.8-4.8 11.2-11.2 21.6-20 29.6-8.8 8.8-18.4 15.2-29.6 20-12 5.6-24 8-36.8 8z"
+                                fill="" />
+                            <path
+                                d="M747.2 297.6H276.8V144c0-32.8 26.4-59.2 59.2-59.2h60.8c21.6-43.2 66.4-71.2 116-71.2 49.6 0 94.4 28 116 71.2h60.8c32.8 0 59.2 26.4 59.2 59.2l-1.6 153.6z m-423.2-47.2h376.8V144c0-6.4-5.6-12-12-12H595.2l-5.6-16c-11.2-32.8-42.4-55.2-77.6-55.2-35.2 0-66.4 22.4-77.6 55.2l-5.6 16H335.2c-6.4 0-12 5.6-12 12v106.4z"
+                                fill="" />
+                        </svg>
                     </span>
                     <span class="bs-stepper-label">Monev</span>
                 </button>
@@ -509,58 +474,151 @@
                     {
                         render: function(data, type, row, meta) {
                             var html = '';
-                            if (row.documents && row.documents.some(doc => doc.doc_type_id ===
-                                    'DC6')) {
-                                html =
-                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show"></i></a>
-                                    `;
-                            } else if (row.documents && row.documents.some(doc => doc
-                                    .doc_type_id ===
-                                    'DC4')) {
-                                html =
-                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-success" title="Unggah Laporan Akhir" href="{{ url('user-proposals/final-report/${row.id}') }}"><i class="bx bx-upload"></i></a>`;
-                            } else if (row.documents && row.documents.some(doc => doc
+                            // if (row.documents && row.documents.some(doc => doc.doc_type_id ===
+                            //         'DC6')) {
+                            //     html =
+                            //         `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show"></i></a>
+                        //         `;
+                            // } else if (row.documents && row.documents.some(doc => doc
+                            //         .doc_type_id ===
+                            //         'DC4')) {
+                            //     html =
+                            //         `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show"></i></a>
+                        //         <a class="badge badge-center rounded-pill bg-success" title="Unggah Laporan Akhir" href="{{ url('user-proposals/final-report/${row.id}') }}"><i class="bx bx-upload"></i></a>`;
+                            // } else if (row.documents && row.documents.some(doc => doc
+                            //         .doc_type_id ===
+                            //         'DC5')) {
+                            //     html =
+                            //         `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show"></i></a>`;
+                            // } else if (row.documents && row.documents.some(doc => doc
+                            //         .doc_type_id === 'DC3')) {
+                            //     html =
+                            //         `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show"></i></a>
+                        // <a class="badge badge-center rounded-pill bg-success" title="Unggah Monev" href="{{ url('user-proposals/monev/${row.id}') }}"><i class="bx bx-upload"></i></a>`;
+                            // } else if (row.bank_id) {
+                            //     html =
+                            //         `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
+                        //         <a class="badge badge-center rounded-pill bg-success" title="Kontrak" href="{{ url('user-proposals/print_pdf/${row.id}') }}"><i class="bx bx-download"></i></a>`;
+                            // } else if (row.approval_vice_rector_2) {
+                            //     html =
+                            //         `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
+                        //         <a class="badge badge-center rounded-pill bg-success" title="Upload Nomor Rekening" href="{{ url('user-proposals/account-bank/${row.id}') }}"><i class="bx bx-upload" style="color:#ffff"></i></a>`;
+                            // } else if (row.mark_as_revised_2) {
+                            //     html =
+                            //         `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
+                            // } else if (row.review_notes_2) {
+                            //     html +=
+                            //         `<a class="badge badge-center rounded-pill bg-success" title="Kirim Revisi 2" style="cursor:pointer" onclick="mark_as_revised_2('${row.id}')"><i class="bx bx-check" style="color:#ffff"></i></a>
+                        //         <a class="badge badge-center rounded-pill bg-success" title="Edit" href="{{ url('user-proposals/edit/${row.id}') }}"><i class="bx bxs-edit" style="color:#ffff"></i></a>`;
+                            // } else if (row.statuses.id === 'S01' || row.statuses.id === 'S02' || row
+                            //     .statuses.id === 'S04' || row.statuses.id === 'S05' || row.statuses
+                            //     .id === 'S06' || row.statuses.id === 'S07') {
+                            //     html +=
+                            //         `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
+                            if (row.documents && row.documents.some(doc => doc
                                     .doc_type_id ===
                                     'DC5')) {
-                                html =
+                                html +=
                                     `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show"></i></a>`;
                             } else if (row.documents && row.documents.some(doc => doc
-                                    .doc_type_id === 'DC3')) {
-                                html =
+                                    .doc_type_id ===
+                                    'DC3')) {
+                                html +=
                                     `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show"></i></a>
-                                <a class="badge badge-center rounded-pill bg-success" title="Unggah Monev" href="{{ url('user-proposals/monev/${row.id}') }}"><i class="bx bx-upload"></i></a>`;
+                            <a class="badge badge-center rounded-pill bg-info" title="Unggah Monev" href="{{ url('user-proposals/monev/${row.id}') }}"><i class="bx bx-upload"></i></a>`;
                             } else if (row.bank_id) {
                                 html =
-                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-success" title="Kontrak" href="{{ url('user-proposals/print_pdf/${row.id}') }}"><i class="bx bx-download"></i></a>`;
-                            } else if (row.approval_vice_rector_2) {
+                                    `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
+                                            <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('user-proposals/show/${row.id}') }}">
+                                                <i class="bx bx-show" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Kontrak">
+                                            <a class="badge badge-center rounded-pill bg-info" href="{{ url('user-proposals/print_pdf/${row.id}') }}">
+                                                <i class="bx bx-download" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                    </ul>`;
+                            } else if (row.status_id === 'S06') {
                                 html =
-                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-success" title="Upload Nomor Rekening" href="{{ url('user-proposals/account-bank/${row.id}') }}"><i class="bx bx-upload" style="color:#ffff"></i></a>`;
-                            } else if (row.mark_as_revised_2) {
+                                    `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
+                                            <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('user-proposals/show/${row.id}') }}">
+                                                <i class="bx bx-show" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Upload Nomor Rekening">
+                                            <a class="badge badge-center rounded-pill bg-success" href="{{ url('user-proposals/account-bank/${row.id}') }}">
+                                                <i class="bx bx-upload" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                    </ul>`;
+                            } else if (row.status_id === 'S05') {
                                 html =
-                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
-                            } else if (row.review_notes_2) {
-                                html +=
-                                    `<a class="badge badge-center rounded-pill bg-success" title="Kirim Revisi 2" style="cursor:pointer" onclick="mark_as_revised_2('${row.id}')"><i class="bx bx-check" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-success" title="Edit" href="{{ url('user-proposals/edit/${row.id}') }}"><i class="bx bxs-edit" style="color:#ffff"></i></a>`;
-                            } else if (row.statuses.id === 'S01' || row.statuses.id === 'S02' || row
-                                .statuses.id === 'S04' || row.statuses.id === 'S05' || row.statuses
-                                .id === 'S06' || row.statuses.id === 'S07') {
-                                html +=
-                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
+                                `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
+                                            <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('user-proposals/show/${row.id}') }}">
+                                                <i class="bx bx-show" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                    </ul>`;
+                            } else if (row.mark_as_revised) {
+                                html =
+                                `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
+                                            <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('user-proposals/show/${row.id}') }}">
+                                                <i class="bx bx-show" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                    </ul>`;
                             } else if (row.review_notes) {
                                 html +=
-                                    `<a class="badge badge-center rounded-pill bg-success" title="Kirim Revisi" style="cursor:pointer" onclick="mark_as_revised_1('${row.id}')"><i class="bx bx-check" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-success" title="Edit" href="{{ url('user-proposals/edit/${row.id}') }}"><i class="bx bxs-edit" style="color:#ffff"></i></a>
-                                    `;
+                                    `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Kirim Revisi">
+                                            <a class="badge badge-center rounded-pill bg-success" style="cursor:pointer" onclick="mark_as_revised('${row.id}')">
+                                                <i class="bx bx-check" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Edit">
+                                            <a class="badge badge-center rounded-pill bg-success" href="{{ url('user-proposals/edit/${row.id}') }}">
+                                                <i class="bx bxs-edit" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                    </ul>`;
+                            } else if (row.status_id === 'S01' || row.status_id === 'S02') {
+                                html =
+                                    `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
+                                            <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('user-proposals/show/${row.id}') }}">
+                                                <i class="bx bx-show" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                    </ul>`;
                             } else {
                                 html =
-                                    `<a class="badge badge-center rounded-pill bg-success mb-2" title="Kirim" style="cursor:pointer" onclick="SubmitFirst('${row.id}')"><i class="bx bx-check" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-warning mb-2" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-success mb-2" title="Edit" href="{{ url('user-proposals/edit/${row.id}') }}"><i class="bx bxs-edit" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-danger mb-2" title="Hapus" style="cursor:pointer" onclick="DeleteId('${row.id}','${row.name}')"><i class="bx bxs-trash" style="color:#ffff"></i></a>`;
+                                    `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Kirim">
+                                            <a class="badge badge-center rounded-pill bg-success mb-2" style="cursor:pointer" onclick="SubmitFirst('${row.id}')">
+                                                <i class="bx bx-check" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
+                                            <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('user-proposals/show/${row.id}') }}">
+                                                <i class="bx bx-show" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Edit">
+                                            <a class="badge badge-center rounded-pill bg-success mb-2" href="{{ url('user-proposals/edit/${row.id}') }}">
+                                                <i class="bx bxs-edit" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Hapus">
+                                            <a class="badge badge-center rounded-pill bg-danger mb-2" style="cursor:pointer" onclick="DeleteId('${row.id}','${row.name}')">
+                                                <i class="bx bxs-trash" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                    </ul>`
                             }
                             return html;
                         },
@@ -638,7 +696,7 @@
 
 
         //Revisi 1
-        function mark_as_revised_1(id) {
+        function mark_as_revised(id) {
             Swal.fire({
                 title: "Apakah Anda yakin?",
                 text: "Anda akan mengirim hasil revisi ini!",
@@ -655,59 +713,7 @@
             }).then(function(result) {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('user-proposals.mark_as_revised_1') }}",
-                        type: "POST",
-                        data: {
-                            id: id,
-                            _token: "{{ csrf_token() }}" // Include CSRF token for security
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Terkirim!',
-                                    text: 'Hasil revisi telah berhasil dikirim.',
-                                    customClass: {
-                                        confirmButton: 'btn btn-success'
-                                    }
-                                });
-                                $('#datatable').DataTable().ajax.reload();
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error!',
-                                    text: data.error,
-                                    customClass: {
-                                        confirmButton: 'btn btn-danger'
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-            });
-        }
-
-
-        //Revisi 2
-        function mark_as_revised_2(id) {
-            Swal.fire({
-                title: "Apakah Anda yakin?",
-                text: "Anda akan mengirim hasil revisi ini!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Kirim!',
-                customClass: {
-                    confirmButton: 'btn btn-primary me-1',
-                    cancelButton: 'btn btn-label-secondary'
-                },
-                buttonsStyling: false
-            }).then(function(result) {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "{{ route('user-proposals.mark_as_revised_2') }}",
+                        url: "{{ route('user-proposals.mark_as_revised') }}",
                         type: "POST",
                         data: {
                             id: id,

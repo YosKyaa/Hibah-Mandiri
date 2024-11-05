@@ -114,7 +114,7 @@
                     <span class="badge bg-danger badge-notifications" id="Reviewer" style="display: none;"></span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a type="button" class="nav-link" data-bs-target="#presentasi" href="../admin/presentation">
                     <i class="tf-icons bx bx-chart me-1"></i> Presentasi
                     <span class="badge bg-danger badge-notifications" id="Presentasi" style="display: none;"></span>
@@ -125,7 +125,7 @@
                     <i class="tf-icons bx bx-bar-chart-alt-2 me-1"></i> Finalisasi Dana
                     <span class="badge bg-danger badge-notifications" id="AdminFundFinalization" style="display: none;"></span>
                 </a>
-            </li>
+            </li> --}}
             <!-- <li class="nav-item">
                 <a type="button" class="nav-link" data-bs-target="#loa" href="../admin/loa">
                     <i class="tf-icons bx bx-task me-1"></i> LoA & Kontrak

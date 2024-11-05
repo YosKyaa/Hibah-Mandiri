@@ -49,8 +49,12 @@ return new class extends Migration
 
             $table->text('review_notes')->nullable();
 
+            $table->text('reject_notes')->nullable();
+
+            $table->boolean('approval_head_of_lppm')->nullable();
+
             $table->unsignedBigInteger('bank_id')->nullable();
-            
+
             $table->foreign('bank_id')->references('id')->on('banks')->nullable();
 
             $table->string('bank_account_number')->nullable();
@@ -61,22 +65,18 @@ return new class extends Migration
 
             $table->date('review_date_end')->nullable();
 
-            $table->date('presentation_date')->nullable();
+            // $table->date('presentation_date')->nullable();
 
-            $table->boolean('mark_as_reviewed')->default(false);
+            $table->boolean('verif_monev')->default(false);
 
-            $table->boolean('mark_as_presented')->nullable();
+            // $table->boolean('mark_as_presented')->nullable();
 
-            $table->boolean('approval_vice_rector_1')->default(false);
+            // $table->boolean('approval_vice_rector_1')->default(false);
 
-            $table->boolean('approval_vice_rector_2')->default(false);
+            // $table->boolean('approval_vice_rector_2')->default(false);
 
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('updated_by')->references('id')->on('users');
-
-
-
-
 
             $table->timestamps();
         });

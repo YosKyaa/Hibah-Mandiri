@@ -1,16 +1,15 @@
 @extends('layouts.master')
-@section('title', 'Manajemen Admin Proposal')
+@section('title', 'Settings/Manage Lookup/Manage Proposal')
 
 
 @section('css')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bs-stepper/bs-stepper.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert2.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
+
 @endsection
 
 @section('style')
@@ -40,25 +39,13 @@
 @endsection
 
 @section('content')
-    <div class="card p-0 mb-2">
-        <div class="card-body d-flex flex-column flex-md-row justify-content-between p-0 pt-4">
-            <div class="app-academy-md-50 card-body d-flex align-items-md-center flex-column text-md-center">
-                <h2 class="card-title mb-4 lh-sm px-md-5 text-center ">
-                    <strong>Halaman Manajemen Proposal.</strong>
-                    <span class="text-primary fw-medium text-nowrap">Admin</span>.
-                </h2>
-                <p class="mb-4">
-                    Halaman ini digunakan untuk mengelola proposal yang diajukan.
-                </p>
-            </div>
-            {{-- <div class="app-academy-md-25 d-flex align-items-end justify-content-end">
-            <img src="" alt="pencil rocket" height="188" class="scaleX-n1-rtl">
-        </div> --}}
+    @if (session('msg'))
+        <div class="alert alert-primary alert-dismissible" role="alert">
+            {{ session('msg') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    </div>
-
-
-    <div class="card mb-3">
+    @endif
+    <div class="card mb-4">
         <div class="card-widget-separator-wrapper">
             <div class="card-body card-widget-separator">
                 <div class="row gy-4 gy-sm-1">
@@ -124,7 +111,7 @@
     <div class="nav-align-top mb-4">
         <ul class="nav nav-tabs nav-fill" role="tablist">
             <li class="nav-item">
-                <a type="button" class="nav-link active" data-bs-target="#dataproposal" href="../admin/proposals">
+                <a type="button" class="nav-link" data-bs-target="#dataproposal" href="../admin/proposals">
                     <i class="tf-icons bx bx-add-to-queue me-1"></i> Data
                 </a>
             </li>
@@ -139,8 +126,8 @@
                     <i class="tf-icons bx bx-chart me-1"></i> Presentasi
                     <span class="badge bg-danger badge-notifications" id="Presentasi" style="display: none;"></span>
                 </a>
-            </li> --}}
-            {{-- <li class="nav-item">
+            </li>
+            <li class="nav-item">
                 <a type="button" class="nav-link" data-bs-target="#dana" href="../admin/fundsfinalization">
                     <i class="tf-icons bx bx-bar-chart-alt-2 me-1"></i> Finalisasi Dana
                     <span class="badge bg-danger badge-notifications" id="AdminFundFinalization"
@@ -148,12 +135,12 @@
                 </a>
             </li> --}}
             <!-- <li class="nav-item">
-                            <a type="button" class="nav-link" data-bs-target="#loa" href="../admin/loa">
-                                <i class="tf-icons bx bx-task me-1"></i> LoA & Kontrak
-                            </a>
-                        </li> -->
+                                            <a type="button" class="nav-link" data-bs-target="#loa" href="../admin/loa">
+                                                <i class="tf-icons bx bx-task me-1"></i> LoA & Kontrak
+                                            </a>
+                                        </li> -->
             <li class="nav-item">
-                <a type="button" class="nav-link" data-bs-target="#fund-disbursement-1"
+                <a type="button" class="nav-link active" data-bs-target="#fund-disbursement-1"
                     href="../admin/fund-disbursement-1">
                     <i class="tf-icons bx bx-select-multiple me-1"></i> Dana Tahap 1
                 </a>
@@ -166,65 +153,25 @@
             </li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="dataproposal" role="tabpanel">
-                <div class="card-datatable table-responsive">
-                    <div class="card-header flex-column flex-md-row pb-0">
-                        <div class="row">
-                            <div class="col-12 pt-3 pt-md-0">
-                                <div class="col-12 ">
-                                    <div class="row">
-                                        <div class=" col-md-3 mb-3">
-                                            <select id="select_category" class="select2 form-select"
-                                                data-placeholder="Kategori">
-                                                <option value="">Kategori</option>
-                                                @foreach ($researchcategories as $d)
-                                                    <option value="{{ $d->id }}">{{ $d->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class=" col-md-3">
-                                            <select id="select_tkt_type" class="select2 form-select"
-                                                data-placeholder="TKT">
-                                                <option value="">TKT</option>
-                                                @foreach ($tktTypes as $d)
-                                                    <option value="{{ $d->id }}">{{ $d->title }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class=" col-md-3">
-                                            <select id="select_main_research_target" class="select2 form-select"
-                                                data-placeholder="Terget Utama Riset">
-                                                <option value="">Terget Utama Riset</option>
-                                                @foreach ($mainresearchtargets as $d)
-                                                    <option value="{{ $d->id }}">{{ $d->title }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <table class="table table-hover table-sm" id="datatable" width="100%">
-                        <thead>
-                            <tr>
-                                <th width="20px">No.</th>
-                                <th data-priority="1">Peneliti</th>
-                                <th>Tim Peneliti</th>
-                                <th data-priority="4" style="width: 50%;">Judul</th>
-                                <th>Kategori</th>
-                                <th style="width: 10%;">TKT</th>
-                                <th>Target Utama Riset</th>
-                                <th>Kontrak</th>
-                                <th data-priority="3">Status</th>
-                                <th data-priority="2"></th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="tambahreviewers" role="tabpanel">
+            <div class="tab-pane fade" id="dataproposal" role="tabpanel">
 
+            </div>
+            <div class="tab-pane fade show active" id="tambahreviewers" role="tabpanel">
+                <div class="table-responsive">
+                    <div class="card-datatable table-responsive">
+                        <table class="table table-hover table-sm" id="datatable" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th data-priority="1">Nama Peneliti</th>
+                                    <th data-priority="3" style="width: 30%;">Judul Proposal</th>
+                                    <th>Status</th>
+                                    <th data-priority="2"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade" id="presentasi" role="tabpanel">
 
@@ -234,12 +181,15 @@
             </div>
             <!-- <div class="tab-pane fade" id="loa" role="tabpanel">
 
-                        </div> -->
+                                        </div> -->
             <div class="tab-pane fade" id="monev" role="tabpanel">
 
             </div>
         </div>
     </div>
+
+
+
 @endsection
 
 @section('script')
@@ -252,7 +202,9 @@
     <script src="{{ asset('assets/vendor/libs/datatables/buttons.bootstrap5.js') }}"></script>
     <script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/select2/id.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @if (session('msg'))
         <script type="text/javascript">
             //swall message notification
@@ -287,7 +239,7 @@
             fetchTotalNullReviewers();
 
             // Anda dapat memanggil fungsi ini secara berkala jika diperlukan
-            // setInterval(fetchTotalNullReviewers, 30000); // Memanggil setiap 30 detik
+            setInterval(fetchTotalNullReviewers, 500); // Memanggil setiap 30 detik
         });
         // Fungsi untuk mengambil jumlah totalS05Proposals
         function fetchTotalS05Proposals() {
@@ -337,28 +289,6 @@
         // Anda dapat memanggil fungsi ini secara berkala jika diperlukan
         // setInterval(fetchTotalNullAdminFundFinalization, 30000); // Memanggil setiap 30 detik
     </script>
-    <script>
-        "use strict";
-        setTimeout(function() {
-            (function($) {
-                "use strict";
-                $(".select2").select2({
-                    allowClear: true,
-                    minimumResultsForSearch: 7
-                });
-            })(jQuery);
-        }, 350);
-        setTimeout(function() {
-            (function($) {
-                "use strict";
-                $(".select2-modal").select2({
-                    dropdownParent: $('#newrecord'),
-                    allowClear: true,
-                    minimumResultsForSearch: 5
-                });
-            })(jQuery);
-        }, 350);
-    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             var table = $('#datatable').DataTable({
@@ -374,10 +304,7 @@
                 ajax: {
                     url: "{{ route('proposals.data') }}",
                     data: function(d) {
-                        d.select_category = $('#select_category').val(),
-                            d.select_tkt_type = $('#select_tkt_type').val(),
-                            d.select_main_research_target = $('#select_main_research_target').val(),
-                            d.search = $('#datatable_filter input[type="search"]').val()
+                        d.search = $('#datatable_filter input[type="search"]').val()
                     },
                 },
                 columnDefs: [{
@@ -393,34 +320,8 @@
                     },
                     {
                         render: function(data, type, row, meta) {
-                            var html = `
-                                <div class="d-flex align-items-center">
-                                    <img src="${row.users.image ? row.users.image : '{{ asset('/assets/img/avatars/user.png') }}'}" alt="User Image" class="rounded-circle me-2" width="30" height="30">
-                                    <strong>${row.users.name.charAt(0).toUpperCase() + row.users.name.slice(1)}</strong>
-                                </div>`;
-                            return html;
-                        }
-                    },
-                    {
-                        render: function(data, type, row, meta) {
                             var html =
-                                '<ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">';
-                            if (row.proposal_teams && row.proposal_teams.length > 0) {
-                                row.proposal_teams.forEach(function(team) {
-                                    if (team.researcher) {
-                                        var imageUrl = team.researcher.image ? team
-                                            .researcher.image :
-                                            "{{ asset('/assets/img/avatars/user.png') }}";
-                                        html +=
-                                            '<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="' +
-                                            team.researcher.name + '">';
-                                        html += '<img src="' + imageUrl +
-                                            '" alt="Avatar" class="rounded-circle">';
-                                        html += '</li>';
-                                    }
-                                });
-                            }
-                            html += '</ul>';
+                                `<strong>${row.users.name.charAt(0).toUpperCase() + row.users.name.slice(1)}</strong>`;
                             return html;
                         }
                     },
@@ -428,34 +329,6 @@
                         render: function(data, type, row, meta) {
                             var html =
                                 `<a href="${row.documents[0].proposal_doc}" style="color: primary;">${row.research_title}</a>`;
-                            return html;
-                        }
-                    },
-                    {
-                        render: function(data, type, row, meta) {
-                            var html = row.research_topic.research_theme.research_category.name;
-                            return html;
-                        }
-                    },
-                    {
-                        render: function(data, type, row, meta) {
-                            var html = row.tkt_type.title;
-                            return html;
-                        }
-                    },
-                    {
-                        render: function(data, type, row, meta) {
-                            var html = row.main_research_target.title;
-                            return html;
-                        }
-                    },
-                    {
-                        render: function(data, type, row, meta) {
-                            var html = row.bank_id ? `
-                                <a href="{{ url('admin/loa/print_contract/${row.id}') }}" class="btn btn-primary btn-sm">
-                                    <i class="bx bx-file" title="Kontrak"></i>
-                                </a>
-                            ` : '-';
                             return html;
                         }
                     },
@@ -469,84 +342,26 @@
                     },
                     {
                         render: function(data, type, row, meta) {
-                            var html = `
-                                <ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
-                                        <a class="badge badge-center rounded-pill bg-warning" href="{{ url('admin/proposals/show/` + row.id + `') }}">
-                                            <i class="bx bxs-show" style="color:#ffff"></i>
-                                        </a>
-                                    </li>
-                                </ul>`;
+                            var html = "";
+                            if (row.documents && row.documents.some(doc => doc
+                                    .doc_type_id ===
+                                    'DC3')) {
+                                html =
+                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('admin/proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
+                            } else {
+                                html =
+                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('admin/proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
+                                    <a class="badge badge-center rounded-pill bg-info" title="Unggah Bukti Tahap 1" href="{{ url('admin/fund-disbursement-1/transfer_receipt/${row.id}') }}"><i class="bx bx-upload" style="color:#ffff"></i></a>`;
+                            }
                             return html;
                         },
-                    },
+                        "orderable": false,
+                        className: "text-md-center"
+                    }
                 ]
 
             });
-            $('#select_category').change(function() {
-                table.draw();
-            });
-            $('#select_tkt_type').change(function() {
-                table.draw();
-            });
-            $('#select_main_research_target').change(function() {
-                table.draw();
-            });
 
         });
-
-        function DeleteId(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Once deleted, data can't be recovered!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!',
-                customClass: {
-                    confirmButton: 'btn btn-primary me-1',
-                    cancelButton: 'btn btn-label-secondary'
-                },
-                buttonsStyling: false
-            }).then(function(result) {
-                if (result.value) {
-                    $.ajax({
-                        url: "{{ route('user-proposals.delete') }}",
-                        type: "DELETE",
-                        data: {
-                            "id": id,
-                            "_token": $("meta[name='csrf-token']").attr("content"),
-                        },
-                        success: function(data) {
-                            if (data['success']) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Deleted!',
-                                    text: 'Your file has been deleted.',
-                                    customClass: {
-                                        confirmButton: 'btn btn-success'
-                                    }
-                                });
-                                $('#datatable').DataTable().ajax.reload();
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error!',
-                                    text: 'An error occurred while deleting the file.',
-                                    customClass: {
-                                        confirmButton: 'btn btn-success'
-                                    }
-                                });
-                            }
-                        }
-                    })
-                }
-            })
-        }
     </script>
-
-
-
-
 @endsection

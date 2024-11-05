@@ -626,26 +626,6 @@
                 });
             });
         });
-        //     $('#research_themes').change(function() {
-        //         var themeId = this.value;
-        //         $("#research_topics").html('');
-        //         $.ajax({
-        //             url: "{{ route('DOC.get_research_topics_by_id') }}",
-        //             type: "GET",
-        //             data: {
-        //                 id: themeId,
-        //                 _token: '{{ csrf_token() }}'
-        //             },
-        //             dataType: 'json',
-        //             success: function(result) {
-        //                 $('#research_topics').html('<option value="">Select Topic</option>');
-        //                 $.each(result, function(key, value) {
-        //                     $("#research_topics").append('<option value="' + value.id +
-        //                         '">' + value.name + '</option>');
-        //                 });
-        //             }
-        //         });
-        //     });
     </script>
     <script>
         $(document).ready(function() {

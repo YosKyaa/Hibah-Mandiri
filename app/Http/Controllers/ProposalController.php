@@ -18,9 +18,9 @@ class ProposalController extends Controller
      */
     public function index()
     {
-        $proposalApproved = Proposal::where('approval_reviewer', true)->count();
-        $proposalDisapprove = Proposal::where('status_id', '=', "S04")->count();
-        $proposalCount = Proposal::count();
+        $proposalApproved = Proposal::where('approval_head_of_lppm', true)->count();
+        $proposalDisapprove = Proposal::where('approval_head_of_lppm', false)->count();
+        $proposalCount = Proposal::where('status_id', '!=', 'S00')->count();
         $lecturers = User::role('lecture')->get();
         $reviewers = User::role('reviewer')->get();
         $totalUsers = $lecturers->concat($reviewers)->count();
@@ -43,7 +43,7 @@ class ProposalController extends Controller
         $documentPath = $proposals->documents->first()->proposal_doc;
         $documentUrl = url($documentPath);
         $user = User::select('image');
-        return view('proposals.show', compact('proposals', 'documentUrl', 'user'));
+        return view('admin.show', compact('proposals', 'documentUrl', 'user'));
     }
     /**
      * Show the form for creating a new resource.
@@ -72,7 +72,7 @@ class ProposalController extends Controller
                 $query->select('id', 'title');
             },
             'proposalTeams.researcher' => function ($query) {
-                $query->select('id', 'username');
+                $query->select('id', 'username', 'image', 'email', 'name');
             },
             'documents' => function ($query) {
                 $query->select('id', 'proposals_id', 'proposal_doc', 'doc_type_id', 'created_by');

@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Settings/Manage Lookup/Manage Proposal')
+@section('title', 'Tambah Reviewer')
 
 
 @section('css')
@@ -22,22 +22,40 @@
             max-width: 150px;
         }
 
-        table.dataTable td {
+        table.dataTable th {
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
             word-wrap: break-word;
         }
+
+        .layout-page,
+        .content-wrapper,
+        .content-wrapper>*,
+        .layout-menu {
+            min-height: unset;
+        }
     </style>
 @endsection
 
 @section('content')
-    @if (session('msg'))
-        <div class="alert alert-primary alert-dismissible" role="alert">
-            {{ session('msg') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="card p-0 mb-2">
+        <div class="card-body d-flex flex-column flex-md-row justify-content-between p-0 pt-4">
+            <div class="app-academy-md-50 card-body d-flex align-items-md-center flex-column text-md-center">
+                <h2 class="card-title mb-4 lh-sm px-md-5 text-center ">
+                    <strong>Halaman Manajemen Proposal.</strong>
+                    <span class="text-primary fw-medium text-nowrap">Admin</span>.
+                </h2>
+                <p class="mb-4">
+                    Halaman ini digunakan untuk mengelola proposal yang diajukan.
+                </p>
+            </div>
+            {{-- <div class="app-academy-md-25 d-flex align-items-end justify-content-end">
+            <img src="" alt="pencil rocket" height="188" class="scaleX-n1-rtl">
+        </div> --}}
         </div>
-    @endif
+    </div>
+
     <div class="card mb-4">
         <div class="card-widget-separator-wrapper">
             <div class="card-body card-widget-separator">
@@ -114,7 +132,7 @@
                     <span class="badge bg-danger badge-notifications" id="Reviewer" style="display: none;"></span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a type="button" class="nav-link" data-bs-target="#presentasi" href="../admin/presentation">
                     <i class="tf-icons bx bx-chart me-1"></i> Presentasi
                     <span class="badge bg-danger badge-notifications" id="Presentasi" style="display: none;"></span>
@@ -126,15 +144,22 @@
                     <span class="badge bg-danger badge-notifications" id="AdminFundFinalization"
                         style="display: none;"></span>
                 </a>
-            </li>
+            </li> --}}
             <!-- <li class="nav-item">
-                <a type="button" class="nav-link" data-bs-target="#loa" href="../admin/loa">
-                    <i class="tf-icons bx bx-task me-1"></i> LoA & Kontrak
-                </a>
-            </li> -->
+                            <a type="button" class="nav-link" data-bs-target="#loa" href="../admin/loa">
+                                <i class="tf-icons bx bx-task me-1"></i> LoA & Kontrak
+                            </a>
+                        </li> -->
             <li class="nav-item">
-                <a type="button" class="nav-link" data-bs-target="#monev" href="../admin/monev">
-                    <i class="tf-icons bx bx-select-multiple me-1"></i> Verifikasi Monev
+                <a type="button" class="nav-link" data-bs-target="#fund-disbursement-1"
+                    href="../admin/fund-disbursement-1">
+                    <i class="tf-icons bx bx-select-multiple me-1"></i> Dana Tahap 1
+                </a>
+            </li>
+            <li class="nav-item">
+                <a type="button" class="nav-link" data-bs-target="#fund-disbursement-2"
+                    href="../admin/fund-disbursement-2">
+                    <i class="tf-icons bx bx-select-multiple me-1"></i> Dana Tahap 2
                 </a>
             </li>
         </ul>
@@ -149,10 +174,10 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th data-priority="1">Nama Peneliti</th>
-                                    <th>Judul Proposal</th>
-                                    <th>Mulai Review</th>
-                                    <th>Selesai Review</th>
+                                    <th data-priority="1">Peneliti</th>
+                                    <th data-priority="3">Judul Proposal</th>
+                                    <th data-priority="5" style="width: 15%;">Mulai Review</th>
+                                    <th data-priority="4" style="width: 15%;">Selesai Review</th>
                                     <th>Nama Reviewer</th>
                                     <th data-priority="2"></th>
                                 </tr>
@@ -180,7 +205,7 @@
             </div>
             <!-- <div class="tab-pane fade" id="loa" role="tabpanel">
 
-            </div> -->
+                        </div> -->
             <div class="tab-pane fade" id="monev" role="tabpanel">
 
             </div>
@@ -206,10 +231,12 @@
 
     @if (session('msg'))
         <script type="text/javascript">
-            //swall message notification
+            // SweetAlert message notification
             $(document).ready(function() {
-                swal(`{!! session('msg') !!}`, {
-                    icon: "info",
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Notification',
+                    text: `{!! session('msg') !!}`,
                 });
             });
         </script>
@@ -319,8 +346,11 @@
                     },
                     {
                         render: function(data, type, row, meta) {
-                            var html =
-                                `<strong>${row.users.name.charAt(0).toUpperCase() + row.users.name.slice(1)}</strong>`;
+                            var html = `
+                                <div class="d-flex align-items-center">
+                                    <img src="${row.users.image ? row.users.image : '{{ asset('/assets/img/avatars/user.png') }}'}" alt="User Image" class="rounded-circle me-2" width="30" height="30">
+                                    <strong>${row.users.name.charAt(0).toUpperCase() + row.users.name.slice(1)}</strong>
+                                </div>`;
                             return html;
                         }
                     },
@@ -376,12 +406,24 @@
                     {
                         render: function(data, type, row, meta) {
                             var html = "";
-                            if (row.statuses.id === "S02") {
-                                html =
-                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('admin/proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
+                            if (row.reviewer) {
+                                html = `
+                                    <ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
+                                            <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('admin/addreviewer/show/${row.id}') }}">
+                                                <i class="bx bx-show" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                    </ul>`;
                             } else {
                                 html =
-                                    `<a class="badge badge-center rounded-pill bg-success" title="Edit" href="{{ url('admin/addreviewer/edit/` + row.id + `') }}"><i class="bx bxs-edit" style="color:#ffff"></i></a>`;
+                                    `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Edit">
+                                            <a class="badge badge-center rounded-pill bg-success" href="{{ url('admin/addreviewer/edit/` + row.id + `') }}">
+                                                <i class="bx bxs-edit" style="color:#ffff"></i>
+                                            </a>
+                                        </li>
+                                    </ul>`;
                             }
                             return html;
                         },

@@ -21,6 +21,7 @@ class DocumentsSeeder extends Seeder
             ['id' => 'DC3', 'name' => 'Account Bank Receipt 1'],
             ['id' => 'DC4', 'name' => 'Account Bank Receipt 2'],
             ['id' => 'DC5', 'name' => 'Monev'],
+            ['id' => 'DC7', 'name' => 'Monev Review'],
             ['id' => 'DC6', 'name' => 'Final Report'],
         ];
         foreach ($data as $item) {

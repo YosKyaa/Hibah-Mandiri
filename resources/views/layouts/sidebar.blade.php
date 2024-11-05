@@ -35,15 +35,15 @@
             </a>
         </li>
         @can('manage_reviewer')
-        <li class="menu-item {{ request()->segment(1) == 'reviewer' ? 'active' : '' }}">
-            <a href="{{ route('reviewers.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-book-reader"></i>
-                <div data-i18n="Dashboards">Review Proposals</div>
-                <!-- <span class="notification-badge" id="">3</span> -->
-            </a>
-        </li>
+            <li class="menu-item {{ request()->segment(1) == 'reviewer' ? 'active' : '' }}">
+                <a href="{{ route('reviewers.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-book-reader"></i>
+                    <div data-i18n="Dashboards">Review Proposals</div>
+                    <!-- <span class="notification-badge" id="">3</span> -->
+                </a>
+            </li>
         @endcan
-        @can('manage_warek1')
+        {{-- @can('manage_warek1')
         <li class="menu-item {{ request()->segment(1) == 'vicerector1' ? 'active' : '' }}">
             <a href="{{ route('vicerector1.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-book-reader"></i>
@@ -60,7 +60,7 @@
                 <!-- <span class="notification-badge" id="">3</span> -->
             </a>
         </li>
-@endcan
+@endcan --}}
         @can('control panel.read')
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Control Panel</span>
@@ -128,55 +128,37 @@
                         </li>
                     @endcan
                 </ul>
-                <li class="menu-item {{ request()->segment(1) == 'cms' ? 'active' : '' }}">
-                    <a href="{{ route('cms.index') }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-book-reader"></i>
-                        <div data-i18n="Dashboards">CMS</div>
+            <li class="menu-item {{ request()->segment(1) == 'cms' ? 'active' : '' }}">
+                <a href="{{ route('cms.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-book-reader"></i>
+                    <div data-i18n="Dashboards">CMS</div>
 
-                    </a>
-                </li>
+                </a>
+            </li>
             </li>
         @endcan
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Ketua LPPM</span>
         </li>
-    <li class="menu-item {{ request()->segment(1) == 'admin' ? 'open active' : '' }}">
+        <li class="menu-item {{ request()->segment(1) == 'headoflppm' ? 'open active' : '' }}">
             <a href="#" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cog"></i>
-                <div>Manage Proposals</div>
+                <div>Manajemen Proposal</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item {{ request()->segment(2) == 'headoflppm.proposals' ? 'active' : '' }}">
+                <li class="menu-item {{ request()->segment(2) == 'proposals' ? 'active' : '' }}">
                     <a href="{{ route('headoflppm.proposals.index') }}" class="menu-link">
 
-                        <div>Data</div>
+                        <div>Proposal</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->segment(2) == 'addreviewer' ? 'active' : '' }}">
-                    <a href="{{ route('addreviewer.index') }}" class="menu-link">
-
-                        <div>Reviewer</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->segment(2) == 'presentation' ? 'active' : '' }}">
-                    <a href="{{ route('presentation.index') }}" class="menu-link">
-
-                        <div>Presentasi</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->segment(2) == 'fundsfinalization' ? 'active' : '' }}">
-                    <a href="{{ route('fundsfinalization.index') }}" class="menu-link">
-
-                        <div>Finalisasi Dana</div>
-                    </a>
-                </li>
-                <!-- <li class="menu-item {{ request()->segment(2) == 'loa' ? 'active' : '' }}">
-                    <a href="{{ route('loa.index') }}" class="menu-link">
-
-                        <div>LoA & Kontrak</div>
-                    </a>
-                </li> -->
                 <li class="menu-item {{ request()->segment(2) == 'monev' ? 'active' : '' }}">
+                    <a href="{{ route('monev.index') }}" class="menu-link">
+
+                        <div>Monev</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->segment(2) == 'pa' ? 'active' : '' }}">
                     <a href="{{ route('monev.index') }}" class="menu-link">
 
                         <div>Verifikasi Monev</div>
@@ -185,49 +167,37 @@
             </ul>
         </li>
         @can('manage_admin')
-        <li class="menu-header small text-uppercase">
+            <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">ADMIN</span>
             </li>
-        <li class="menu-item {{ request()->segment(1) == 'admin' ? 'open active' : '' }}">
+            <li class="menu-item {{ request()->segment(1) == 'admin' ? 'open active' : '' }}">
                 <a href="#" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-cog"></i>
-                    <div>Manage Proposals</div>
+                    <div>Manajemen Proposals</div>
                 </a>
                 <ul class="menu-sub">
                     <li class="menu-item {{ request()->segment(2) == 'proposals' ? 'active' : '' }}">
                         <a href="{{ route('proposals.index') }}" class="menu-link">
 
-                            <div>Data</div>
+                            <div>Proposal</div>
                         </a>
                     </li>
                     <li class="menu-item {{ request()->segment(2) == 'addreviewer' ? 'active' : '' }}">
                         <a href="{{ route('addreviewer.index') }}" class="menu-link">
 
-                            <div>Reviewer</div>
+                            <div>Tambah Reviewer</div>
                         </a>
                     </li>
-                    <li class="menu-item {{ request()->segment(2) == 'presentation' ? 'active' : '' }}">
-                        <a href="{{ route('presentation.index') }}" class="menu-link">
+                    <li class="menu-item {{ request()->segment(2) == 'fund-disbursement-1' ? 'active' : '' }}">
+                        <a href="{{ route('fund-disbursement-1.index') }}" class="menu-link">
 
-                            <div>Presentasi</div>
+                            <div>Dana Tahap 1</div>
                         </a>
                     </li>
-                    <li class="menu-item {{ request()->segment(2) == 'fundsfinalization' ? 'active' : '' }}">
-                        <a href="{{ route('fundsfinalization.index') }}" class="menu-link">
+                    <li class="menu-item {{ request()->segment(2) == 'fund-disbursement-2' ? 'active' : '' }}">
+                        <a href="{{ route('fund-disbursement-2.index') }}" class="menu-link">
 
-                            <div>Finalisasi Dana</div>
-                        </a>
-                    </li>
-                    <!-- <li class="menu-item {{ request()->segment(2) == 'loa' ? 'active' : '' }}">
-                        <a href="{{ route('loa.index') }}" class="menu-link">
-
-                            <div>LoA & Kontrak</div>
-                        </a>
-                    </li> -->
-                    <li class="menu-item {{ request()->segment(2) == 'monev' ? 'active' : '' }}">
-                        <a href="{{ route('monev.index') }}" class="menu-link">
-
-                            <div>Verifikasi Monev</div>
+                            <div>Dana Tahap 2</div>
                         </a>
                     </li>
                 </ul>
@@ -238,16 +208,16 @@
                     <div data-i18n="Dashboards">Kelola Pengumuman</div>
                 </a>
             </li>
-            @endcan
-            <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">Dokumentasi</span>
-            </li>
-            <li class="menu-item {{ request()->segment(1) == 'dokumentasi' ? 'active' : '' }}">
-                <a href="{{ route('dokumentasi') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-file"></i>
-                    <div data-i18n="Dashboards">Dokumentasi</div>
-                </a>
-            </li>
+        @endcan
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Dokumentasi</span>
+        </li>
+        <li class="menu-item {{ request()->segment(1) == 'dokumentasi' ? 'active' : '' }}">
+            <a href="{{ route('dokumentasi') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Dashboards">Dokumentasi</div>
+            </a>
+        </li>
     </ul>
 </aside>
 <!-- / Menu -->

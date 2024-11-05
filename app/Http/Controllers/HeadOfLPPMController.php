@@ -14,6 +14,7 @@ use App\Models\User;
 use Yajra\DataTables\Facades\DataTables;
 use DB;
 
+
 class HeadOfLPPMController extends Controller
 {
     public function index()
@@ -51,7 +52,7 @@ class HeadOfLPPMController extends Controller
                 $query->select('id', 'title');
             },
             'proposalTeams.researcher' => function ($query) {
-                $query->select('id', 'username');
+                $query->select('id', 'username','name', 'image');
             },
             'documents' => function ($query) {
                 $query->select('id', 'proposals_id', 'proposal_doc', 'doc_type_id', 'created_by');
@@ -127,9 +128,10 @@ class HeadOfLPPMController extends Controller
     public function revision($id)
     {
         $proposal = Proposal::findOrFail($id);
-        return view('headoflppm.revision', compact('proposal'));
+        $documentPath = $proposal->documents->first()->proposal_doc;
+        $documentUrl = url($documentPath);
+        return view('headoflppm.revision', compact('proposal', 'documentUrl'));
     }
-
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -139,17 +141,64 @@ class HeadOfLPPMController extends Controller
         $proposal = Proposal::findOrFail($id);
         $proposal->update([
             'review_notes' => $request->review_notes,
-            'status_id' => 'S03',
+            'status_id' => 'S04',
         ]);
 
-        return redirect()->route('headoflppm.index')->with('success', 'Catatan revisi berhasil disimpan.');
+        return redirect()->route('headoflppm.proposals.index')->with('success', 'Catatan revisi berhasil disimpan.');
     }
+
+
 
     public function approve(Request $request)
     {
         $data = Proposal::find($request->id);
         if ($data) {
             $data->approval_head_of_lppm = true;
+            $data->status_id = 'S06';
+            $data->save();
+            return response()->json([
+                'success' => true,
+                'message' => 'Status berhasil diubah!'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengubah status!'
+            ]);
+        }
+    }
+
+
+    public function reject($id)
+    {
+        $proposal = Proposal::findOrFail($id);
+        $documentPath = $proposal->documents->first()->proposal_doc;
+        $documentUrl = url($documentPath);
+        return view('headoflppm.reject', compact('proposal', 'documentUrl'));
+    }
+
+    public function rejectUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'reject_notes' => ['required', 'string'],
+        ]);
+
+        $proposal = Proposal::findOrFail($id);
+        $proposal->update([
+            'reject_notes' => $request->reject_notes,
+            'status_id' => 'S05',
+        ]);
+
+        return redirect()->route('headoflppm.proposals.index')->with('success', 'Proposal berhasil ditolak.');
+    }
+
+
+    public function disapprove(Request $request)
+    {
+        $data = Proposal::find($request->id);
+        if ($data) {
+            $data->approval_head_of_lppm = false;
+            $data->status_id = 'S05';
             $data->save();
             return response()->json([
                 'success' => true,

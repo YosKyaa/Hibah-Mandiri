@@ -21,6 +21,8 @@ use App\Http\Controllers\UserAnnouncementController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CmsController;
+use App\Http\Controllers\FundDisbursement1Controller;
+use App\Http\Controllers\FundDisbursement2Controller;
 use App\Http\Controllers\HeadOfLPPMController;
 use App\Http\Controllers\UserProposalController;
 use App\Http\Controllers\ViceRector1Controller;
@@ -77,8 +79,7 @@ Route::group(['prefix' => 'user-proposals'], function () {
     Route::get('/category/by_id', [UserProposalController::class, 'category_by_id'])->name('DOC.get_category_by_id');
     Route::get('/research_type_funds/{researchtypesId}', [UserProposalController::class, 'getResearchTypeFunds'])->name('get_research_type_funds');
     Route::post('/approve', [UserProposalController::class, 'approve'])->name('user-proposals.approve');
-    Route::post('/mark_as_revised_1', [UserProposalController::class, 'mark_as_revised_1'])->name('user-proposals.mark_as_revised_1');
-    Route::post('/mark_as_revised_2', [UserProposalController::class, 'mark_as_revised_2'])->name('user-proposals.mark_as_revised_2');
+    Route::post('/mark_as_revised', [UserProposalController::class, 'mark_as_revised'])->name('user-proposals.mark_as_revised');
     Route::get('/print_pdf/{id}', [UserProposalController::class, 'print_pdf'])->name('print_pdf');
     Route::get('/print_loa/{id}', [UserProposalController::class, 'print_loa'])->name('print_loa');
     Route::get('/account-bank/{id}', [UserProposalController::class, 'account_bank'])->name('user-proposals-account-bank.edit');
@@ -110,24 +111,26 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'addreviewer'], function () { //Presentasi
         Route::any('/', [AddReviewerController::class, 'index'])->name('addreviewer.index')->middleware('auth');
         Route::get('/data', [AddReviewerController::class, 'data'])->name('addreviewer.data');
+        Route::get('/show/{id}', [AddReviewerController::class, 'show'])->name('addreviewer.show');
         Route::delete('/delete', [AddReviewerController::class, 'delete'])->name('addreviewer.delete');
         Route::get('/edit/{id}', [AddReviewerController::class, 'edit'])->name('addreviewer.edit');
         Route::put('/update/{id}', [AddReviewerController::class, 'update'])->name('addreviewer.update');
     });
 
-    Route::group(['prefix' => 'presentation'], function () { //Presentasi
-        Route::any('/', [PresentasiController::class, 'index'])->name('presentation.index')->middleware('auth');
-        Route::get('/data', [PresentasiController::class, 'data'])->name('presentation.data');
-        Route::delete('/delete', [PresentasiController::class, 'delete'])->name('presentation.delete');
-        Route::get('/edit/{id}', [PresentasiController::class, 'edit'])->name('presentation.edit');
-        Route::put('/update/{id}', [PresentasiController::class, 'update'])->name('presentation.update');
+    Route::group(['prefix' => 'fund-disbursement-1'], function () { //Presentasi
+        Route::any('/', [FundDisbursement1Controller::class, 'index'])->name('fund-disbursement-1.index')->middleware('auth');
+        Route::get('/data', [FundDisbursement1Controller::class, 'data'])->name('fund-disbursement-1.data');
+        Route::delete('/delete', [FundDisbursement1Controller::class, 'delete'])->name('fund-disbursement-1.delete');
+        Route::get('/transfer_receipt/{id}', [FundDisbursement1Controller::class, 'transfer_receipt'])->name('fund-disbursement-1.transfer_receipt');
+        Route::put('/transfer_receipt_update/{id}', [FundDisbursement1Controller::class, 'transfer_receipt_update'])->name('fund-disbursement-1.transfer_receipt_update');
+
     });
 
 
-    Route::group(['prefix' => 'fundsfinalization'], function () { //FinalisasiDanas
-        Route::any('/', [FinalisasiDanaController::class, 'index'])->name('fundsfinalization.index')->middleware('auth');
-        Route::get('/data', [FinalisasiDanaController::class, 'data'])->name('fundsfinalization.data');
-        Route::post('/approve', [FinalisasiDanaController::class, 'approve'])->name('fundsfinalization.approve');
+    Route::group(['prefix' => 'fund-disbursement-2'], function () { //FinalisasiDanas
+        Route::any('/', [FundDisbursement2Controller::class, 'index'])->name('fund-disbursement-2.index')->middleware('auth');
+        Route::get('/data', [FundDisbursement2Controller::class, 'data'])->name('fund-disbursement-2.data');
+        Route::post('/approve', [FundDisbursement2Controller::class, 'approve'])->name('fund-disbursement-2.approve');
     });
 
     Route::group(['prefix' => 'loa'], function () { //Loa
@@ -138,14 +141,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/print_contract/{id}', [LoaController::class, 'print_contract'])->name('print_contract');
     });
 
-    Route::group(['prefix' => 'monev'], function () { //Monev
-        Route::any('/', [MonevController::class, 'index'])->name('monev.index')->middleware('auth');
-        Route::get('/data', [MonevController::class, 'data'])->name('monev.data');
-        Route::delete('/delete', [MonevController::class, 'delete'])->name('monev.delete');
-        Route::get('/edit/{id}', [MonevController::class, 'edit'])->name('monev.edit');
-        Route::get('/print_monev/{id}', [MonevController::class, 'print_monev'])->name('print_monev');
-        ROute::post('/approve', [MonevController::class, 'approve'])->name('monev.approve');
-    });
 });
 
 
@@ -166,8 +161,19 @@ Route::group(['prefix' => 'headoflppm'], function () {
         Route::put('/update/{id}', [HeadOfLPPMController::class, 'update'])->name('headoflppm.update');
         Route::get('/download/{id}', [HeadOfLPPMController::class, 'download'])->name('headoflppm.download');
         Route::post('/approve', [HeadOfLPPMController::class, 'approve'])->name('headoflppm.approve');
+        Route::post('/disapprove', [HeadOfLPPMController::class, 'disapprove'])->name('headoflppm.disapprove');
+        Route::get('/reject/{id}', [HeadOfLPPMController::class, 'reject'])->name('headoflppm.reject');
+        Route::put('/rejectupdate/{id}', [HeadOfLPPMController::class, 'rejectUpdate'])->name('headoflppm.rejectUpdate');
     });
 
+    Route::group(['prefix' => 'monev'], function () { //Monev
+        Route::any('/', [MonevController::class, 'index'])->name('monev.index')->middleware('auth');
+        Route::get('/data', [MonevController::class, 'data'])->name('monev.data');
+        Route::get('/review/{id}', [MonevController::class, 'review'])->name('monev.review');
+        Route::put('/update/{id}', [MonevController::class, 'update'])->name('monev.update');
+        Route::get('/print_monev/{id}', [MonevController::class, 'print_monev'])->name('print_monev');
+
+    });
 
 });
 

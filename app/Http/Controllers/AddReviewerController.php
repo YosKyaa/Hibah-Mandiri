@@ -12,14 +12,14 @@ class AddReviewerController extends Controller
 {
     public function index()
     {
-        $proposalApproved = Proposal::where('approval_reviewer', true)->count();
-        $proposalDisapprove = Proposal::where('status_id', '=', "S04")->count();
+        $proposalApproved = Proposal::where('approval_head_of_lppm', true)->count();
+        $proposalDisapprove = Proposal::where('approval_head_of_lppm', false)->count();
         $proposalCount = Proposal::count();
         $lecturers = User::role('lecture')->get();
         $reviewers = User::role('reviewer')->get();
         $totalUsers = $lecturers->concat($reviewers)->count();
         $totalNullReviewers = Proposal::whereNull('reviewer_id')->count();
-        return view('admin.addreviewer.index', compact( 'totalUsers', 'proposalCount', 'proposalApproved', 'proposalDisapprove', 'totalNullReviewers'));
+        return view('admin.addreviewer.index', compact( 'totalUsers', 'proposalCount', 'totalNullReviewers', 'proposalApproved', 'proposalDisapprove'));
     }
 
 
@@ -107,7 +107,7 @@ class AddReviewerController extends Controller
         $reviewer = User::findOrFail($request->reviewer_id);
         $reviewer->assignRole('reviewer');
 
-        return redirect()->route('addreviewer.index')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('addreviewer.index')->with('msg', 'Reviewer ' . ucfirst(strtolower($reviewer->name)) . ' berhasil ditambahkan.');
     }
 
     public function delete(Request $request){
@@ -124,5 +124,23 @@ class AddReviewerController extends Controller
                 'message' => 'Gagal dihapus!'
             ]);
         }
+    }
+
+    public function show($id)
+    {
+        $proposals = Proposal::with([
+            'proposalTeams.researcher' => function ($query) {
+                $query->select('id', 'username', 'image');
+            },
+
+            'reviewer' => function ($query) {
+                $query->select('id', 'username', 'image');
+            },
+        ])->findOrFail($id);
+        $documentPath = $proposals->documents->first()->proposal_doc;
+        $documentUrl = url($documentPath);
+        $user = User::select('image');
+
+        return view('admin.addreviewer.show', compact('proposals', 'documentUrl', 'user'));
     }
 }

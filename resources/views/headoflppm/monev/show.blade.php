@@ -198,7 +198,7 @@
                         <label for="inputAddress2" class="form-label mb-0">CATATAN</label>
                         <p>{!! $proposals->notes !!}</p>
                     </div>
-                    <a href="{{ route('user-proposals.index') }}" class="btn btn-primary">Kembali</a>
+                    <a href="{{ route('monev.index') }}" class="btn btn-primary">Kembali</a>
                 </div>
             </div>
         </div>

@@ -4,11 +4,12 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert2.css') }}">
+
 @endsection
 @section('style')
     <style>
         .iframe {
-            height: 400px;
+            height: 700px;
             width: 100%;
             border: none;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
@@ -34,7 +35,7 @@
                             <iframe src="{{ $documentUrl }}" class="iframe mb-3"
                                 onerror="this.onerror=null; this.outerHTML='Cannot load PDF.';">
                             </iframe>
-                            <a href="{{ $documentUrl }}" class="btn btn-secondary" download>Download Form</a>
+                            <a href="{{ $pdfFilePath }}" class="btn btn-secondary" download>Download Form Penilaian Proposal</a>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -48,7 +49,8 @@
                             <div class="col-md mb-md-0 mb-5">
                                 <div class="form-check custom-option custom-option-basic">
                                     <label class="form-check-label custom-option-content" for="customRadioTemp1">
-                                        <input name="is_recommended" class="form-check-input" type="radio" value="1" id="customRadioTemp1" checked>
+                                        <input name="is_recommended" class="form-check-input" type="radio" value="1"
+                                            id="customRadioTemp1" checked>
                                         <span class="custom-option-header">
                                             <span class="h6 mb-0">Rekomendasi</span>
                                             <small class="text-muted">✔️</small>
@@ -62,20 +64,22 @@
                             <div class="col-md">
                                 <div class="form-check custom-option custom-option-basic">
                                     <label class="form-check-label custom-option-content" for="customRadioTemp2">
-                                        <input name="is_recommended" class="form-check-input" type="radio" value="0" id="customRadioTemp2">
+                                        <input name="is_recommended" class="form-check-input" type="radio" value="0"
+                                            id="customRadioTemp2">
                                         <span class="custom-option-header">
                                             <span class="h6 mb-0">Tidak Rekomendasi</span>
                                             <small class="text-muted">❌</small>
                                         </span>
                                         <span class="custom-option-body">
-                                            <small>Proposal ini tidak direkomendasikan untuk masuk tahap selanjutnya.</small>
+                                            <small>Proposal ini tidak direkomendasikan untuk masuk tahap
+                                                selanjutnya.</small>
                                         </span>
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    <a href="{{ route('reviewers.index') }}" class="btn btn-secondary">Kembali</a>
                     <button type="submit" class="btn btn-primary" onclick="return confirmSubmit(event)">Kirim</button>
                 </form>
             </div>
@@ -89,6 +93,31 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    @if (session('success'))
+        <script type="text/javascript">
+            //swall message notification
+            $(document).ready(function() {
+                Swal.fire({
+                    title: 'Info!',
+                    text: '{!! session('success') !!}',
+                    type: 'info',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false
+                });
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script type="text/javascript">
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "{{ session('error') }}",
+            });
+        </script>
+    @endif
     <script>
         function confirmSubmit(event) {
             event.preventDefault(); // Prevent the default form submission

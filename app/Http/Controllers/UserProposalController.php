@@ -110,17 +110,12 @@ class UserProposalController extends Controller
     public function create(Request $request)
     {
         try {
-            $existingProposal = Proposal::where('users_id', Auth::user()->id)->orderBy('id', 'desc')->first();
-            if ($existingProposal) {
-                if ($existingProposal->status_id == 'S04') {
-                    // Allow creating a new proposal
-                } else {
-                    return redirect()->route('user-proposals.index')->with('proposals', 'Anda sudah membuat proposal sebelumnya.');
-                }
+            $userProposalCount = Proposal::where('users_id', Auth::user()->id)->count();
+            if ($userProposalCount >= 2) {
+                return redirect()->route('user-proposals.index')->with('proposals', 'Anda sudah mencapai batas maksimal pengajuan proposal.');
             }
 
             if ($request->isMethod('POST')) {
-                // dd($request->all());
                 $this->validate($request, [
                     'research_type' => 'required|exists:research_types,id',
                     'research_categories' => 'required|exists:research_categories,id',
@@ -129,7 +124,6 @@ class UserProposalController extends Controller
                     'research_title' => 'required|string|max:255',
                     'tkt_type' => 'required|exists:tkt_types,id',
                     'main_research_target' => 'required|exists:main_research_targets,id',
-                    // 'document' => 'required|mimes:pdf|max:10000', // max 10MB
                     'total_fund' => 'required|numeric|min:0|max:999999999999999',
                     'researcher_id' => 'required|array',
                     'researcher_id.*' => 'exists:users,id',
@@ -196,20 +190,9 @@ class UserProposalController extends Controller
                 $researchcategories = ResearchCategories::all();
                 $researchthemes = ResearchThemes::all();
                 $researchtopics = ResearchTopics::all();
-                // $researchteam = ResearchTeam::all();
                 $tkttype = TktTypes::all();
                 $existingResearchers = ProposalTeams::pluck('researcher_id')->toArray();
                 $mainresearch = MainResearchTarget::all();
-                // DB::table('users')
-                // ->select('users.id', 'users.name', DB::raw("'COUNT'('proposal_teams.id') as total"), 'proposals.status_id')
-                // ->leftJoin('proposal_teams','users.id','=','proposal_teams.researcher_id')
-                // ->leftJoin('proposals','proposals.id','=','proposal_teams.proposals_id')
-                // ->where('proposals.status_id','!=','S08')
-                // ->orWhere('proposals.status_id','!=','S04')
-                // ->orWhereNull('proposals.status_id')
-                // ->groupBy('users.id','users.name','proposals.status_id')
-                // ->having('total','<',2)
-                // ->get();
 
                 $users = User::select('users.id', 'users.name', DB::raw("COUNT('proposal_teams.id') as total"))
                     ->leftJoin('proposal_teams', 'users.id', '=', 'proposal_teams.researcher_id')
@@ -219,7 +202,7 @@ class UserProposalController extends Controller
                     })
                     ->where(function ($query) {
                         $query->where('proposals.status_id', '!=', 'S08')
-                            ->orWhere('proposals.status_id', '!=', 'S04')
+                            ->orWhere('proposals.status_id', '!=', 'S05')
                             ->orWhereNull('proposals.status_id');
                     })
                     ->groupBy('users.id', 'users.name')
@@ -251,12 +234,12 @@ class UserProposalController extends Controller
         }
     }
 
-    public function mark_as_revised_1(Request $request)
+    public function mark_as_revised(Request $request)
     {
         $data = Proposal::find($request->id);
         if ($data) {
             $data->status_id = "S02";
-            $data->mark_as_revised_1 = true;
+            $data->mark_as_revised = true;
             $data->save();
             return response()->json([
                 'success' => true,
@@ -269,24 +252,7 @@ class UserProposalController extends Controller
             ]);
         }
     }
-    public function mark_as_revised_2(Request $request)
-    {
-        $data = Proposal::find($request->id);
-        if ($data) {
-            $data->status_id = "S02";
-            $data->mark_as_revised_2 = true;
-            $data->save();
-            return response()->json([
-                'success' => true,
-                'message' => 'Status berhasil diubah!'
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal mengubah status!'
-            ]);
-        }
-    }
+
     public function timeline()
     {
         return view('proposals.timeline');
@@ -429,6 +395,8 @@ class UserProposalController extends Controller
             'bank_account_name' => 'required|string|max:255',
             'bank_account_number' => 'required|string|max:255',
             'bank' => 'required|exists:banks,id',
+            'status_id' => 'S07',
+
         ]);
 
         $proposal = Proposal::findOrfail($id);
@@ -436,6 +404,7 @@ class UserProposalController extends Controller
             'bank_account_name' => $request->bank_account_name,
             'bank_account_number' => $request->bank_account_number,
             'bank_id' => $request->bank,
+
         ]);
 
         return redirect()->route('user-proposals.index')->with('proposals', 'Data BERHASIL diperbarui!');
@@ -475,7 +444,7 @@ class UserProposalController extends Controller
         $proposals = Proposal::findOrFail($id);
         $proposals->update([
             'monev_comment' => $request->monev_comment,
-            'status_id' => 'S09',
+            'status_id' => 'S08',
         ]);
         Documents::create([
             'proposals_id' => $proposals->id,

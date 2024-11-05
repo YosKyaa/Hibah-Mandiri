@@ -153,34 +153,16 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@floating-ui/dom@1.6.10"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    @if (session('success'))
+    @if (session('msg'))
         <script type="text/javascript">
+            //swall message notification
             $(document).ready(function() {
-                Swal.fire({
-                    title: 'Success!',
-                    text: '{!! session('success') !!}',
-                    icon: 'success',
-                    customClass: {
-                        confirmButton: 'btn btn-primary'
-                    },
-                    buttonsStyling: false
+                swal(`{!! session('msg') !!}`, {
+                    icon: "info",
                 });
             });
-        </script>
-    @endif
-    @if (session('error'))
-        <script type="text/javascript">
-            $(document).ready(function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: "{{ session('error') }}",
-                    customClass: {
-                        confirmButton: 'btn btn-danger'
-                    },
-                    buttonsStyling: false
-                });
-            });
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         </script>
     @endif
     <script>
@@ -322,27 +304,12 @@
                             if (row.documents && row.documents.some(doc => doc
                                     .doc_type_id ===
                                     'DC2')) {
-                                html += `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
-                                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
-                                                <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('reviewer/show/${row.id}') }}">
-                                                    <i class="bx bx-show" style="color:#ffff"></i>
-                                                </a>
-                                            </li>
-                                        </ul>`;
+                                html +=
+                                    `<a  class="badge badge-center rounded-pill bg-warning mb-1" title="Detail Proposal" href="{{ url('reviewer/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
                             } else {
                                 html +=
-                                    `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
-                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
-                                            <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('reviewer/show/${row.id}') }}">
-                                                <i class="bx bx-show" style="color:#ffff"></i>
-                                            </a>
-                                        </li>
-                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Upload form">
-                                            <a class="badge badge-center rounded-pill bg-success mb-2" href="{{ url('reviewer/assessment/${row.id}') }}">
-                                                <i class="bx bx-upload" style="color:#ffff"></i>
-                                            </a>
-                                        </li>
-                                    </ul>`;
+                                    `<a  class="badge badge-center rounded-pill bg-warning mb-1" title="Detail Proposal" href="{{ url('reviewer/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
+                                    <a class="badge badge-center rounded-pill bg-warning"title="Upload form" href="{{ url('reviewer/assessment/${row.id}') }}"><i class="bx bx-upload"  style="color:#ffff"></i></a>`;
                             }
                             return html;
                         },
