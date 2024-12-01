@@ -264,10 +264,12 @@
                     {
                         render: function(data, type, row, meta) {
                             var html = '';
-                            if (row.verif_monev === true || row.verif_monev === 1) {
+                            if (row.documents && row.documents.some(doc => doc
+                                    .doc_type_id ===
+                                    'DC6')) {
                                 html =
                                     '<span class="badge rounded-pill bg-label-success">Terverifikasi</span>';
-                            } else if (row.verif_monev === false || row.verif_monev === 0) {
+                            } else {
                                 html =
                                     '<span class="badge rounded-pill bg-label-secondary">Belum Direview</span>';
                             }
@@ -277,13 +279,16 @@
                     {
                         render: function(data, type, row, meta) {
                             var html = '';
-                            if (row.verif_monev === false || row.verif_monev === 0) {
+                            if (row.documents && row.documents.some(doc => doc
+                                    .doc_type_id ===
+                                    'DC6')) {
                                 html +=
-                                    `<a class="badge badge-center rounded-pill bg-warning mb-1" title="Detail Proposal" href="{{ url('headoflppm/proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
-                                    <a class="badge badge-center rounded-pill bg-success" title="Verifikasi" href="{{ url('headoflppm/monev/review/${row.id}') }}"><i class="bx bx-check" style="color:#ffff"></i></a>`;
+                                `<a class="badge badge-center rounded-pill bg-warning mb-1" title="Detail Proposal" href="{{ url('headoflppm/proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
                             } else {
                                 html +=
-                                    `<a class="badge badge-center rounded-pill bg-warning mb-1" title="Detail Proposal" href="{{ url('headoflppm/proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
+                                `<a class="badge badge-center rounded-pill bg-warning mb-1" title="Detail Proposal" href="{{ url('headoflppm/proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>
+                                <a class="badge badge-center rounded-pill bg-success" title="Verifikasi" href="{{ url('headoflppm/monev/review/${row.id}') }}"><i class="bx bx-check" style="color:#ffff"></i></a>`;
+
                             }
                             return html;
                         },

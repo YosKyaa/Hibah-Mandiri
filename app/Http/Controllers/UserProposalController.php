@@ -413,8 +413,8 @@ class UserProposalController extends Controller
     public function monev($id)
     {
         $proposal = Proposal::findOrfail($id);
-
-        return view('proposals.monev', compact('proposal'));
+        $pdfFilePath = url('storage/formtemplate/ketentuan_monev.pdf');
+        return view('proposals.monev', compact('proposal', 'pdfFilePath'));
     }
 
     public function monev_update(Request $request, $id)
@@ -507,7 +507,7 @@ class UserProposalController extends Controller
         Documents::create([
             'proposals_id' => $proposals->id,
             'proposal_doc' => $fileName,
-            'doc_type_id' => 'DC6',
+            'doc_type_id' => 'DC7',
             'created_by' => Auth::user()->id,
         ]);
 

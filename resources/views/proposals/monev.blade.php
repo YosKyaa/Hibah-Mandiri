@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/typography.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         .layout-page,
         .content-wrapper,
@@ -27,6 +28,13 @@
                 <span class="text-muted">Silahkan unggah dokumen dengan format PDF </span>
             </div>
             <div class="card-body">
+                <div class="mb-3">
+                    {{-- <h4>Silakan lengkapi formulir di bawah ini!</h4> --}}
+                    <div class="mb-3">
+                        <a href="{{ $pdfFilePath }}" class="btn btn-info">
+                            <i class="fas fa-file-download"></i> &nbsp;Ketentuan Laporan MONEV
+                        </a>
+                    </div>
                 <form id="form-add-new-record" method="POST"
                     action="{{ route('user-proposals-monev.update', $proposal->id) }}" enctype="multipart/form-data">
                     @csrf
@@ -54,7 +62,7 @@
                                 </span>
                             @enderror
                         </div>
-                  
+
                     <button type="submit" class="btn btn-primary" onclick="return confirmSubmit(event)">Send</button>
                 </form>
             </div>

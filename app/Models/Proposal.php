@@ -39,6 +39,7 @@ class Proposal extends Model
         'monev_comment',
         'is_recommended',
         'reject_notes',
+        'monev_review',
     ];
 
     public function scopeFilter($query, array $filters)

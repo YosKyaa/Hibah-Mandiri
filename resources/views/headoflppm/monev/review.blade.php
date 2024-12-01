@@ -47,7 +47,7 @@
                         <div class="col-md-4 mb-3 p-3">
                             {{-- <h4>Silakan lengkapi formulir di bawah ini!</h4> --}}
                             <div class="mb-3">
-                                <a href="{{ $documentUrl }}" class="btn btn-info">
+                                <a href="{{ $pdfFilePath }}" class="btn btn-info">
                                     <i class="fas fa-file-download"></i> &nbsp;Formulir Penilaian MONEV
                                 </a>
                             </div>

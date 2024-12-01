@@ -199,9 +199,9 @@
 
     @foreach ($proposals as $proposal)
         @if (
-            $proposal->documents->contains('doc_type_id', 'DC4') &&
-                !$proposal->documents->contains('doc_type_id', 'DC6') &&
-                !in_array($proposal->status_id, ['S00', 'S01', 'S02', 'S03', 'S04', 'S05', 'S06', 'S07', 'S08']))
+            $proposal->documents->contains('doc_type_id', 'DC6') &&
+                !$proposal->documents->contains('doc_type_id', 'DC7') &&
+                !in_array($proposal->status_id, ['S00', 'S01', 'S02', 'S03', 'S04', 'S05', 'S06', 'S07', 'S08', 'S09']))
             <div class="row g-6 mb-3">
                 <div class="col-md-12 col-xl-12">
                     <div class="card bg-warning text-white">
@@ -220,7 +220,7 @@
 
     @foreach ($proposals as $proposal)
         @if (
-            $proposal->documents->contains('doc_type_id', 'DC6') &&
+            $proposal->documents->contains('doc_type_id', 'DC7') &&
                 !in_array($proposal->status_id, ['S00', 'S01', 'S02', 'S03', 'S04', 'S05', 'S06', 'S07', 'S08', 'S09']))
             <div class="row g-6 mb-3">
                 <div class="col-md-12 col-xl-12">
@@ -305,7 +305,7 @@
                 <i class="bx bx-chevron-right"></i>
             </div>
             <div class="step" data-target="#checkout-confirmation">
-                <button type="button" class="step-trigger" id="Step-4" aria-selected="false">
+                <button type="button" class="step-trigger" id="Step-5" aria-selected="false">
                     <span class="bs-stepper-icon">
                         <svg width="800px" height="800px" viewBox="0 0 1024 1024" fill="#000000" class="icon"
                             version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -325,7 +325,7 @@
                 <i class="bx bx-chevron-right"></i>
             </div>
             <div class="step" data-target="#checkout-confirmation">
-                <button type="button" class="step-trigger" id="Step-5" aria-selected="false">
+                <button type="button" class="step-trigger" id="Step-6" aria-selected="false">
                     <span class="bs-stepper-icon">
                         <svg fill="#000000" width="800px" height="800px" viewBox="0 0 1920 1920"
                             xmlns="http://www.w3.org/2000/svg">
@@ -517,6 +517,17 @@
                             //         `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
                             if (row.documents && row.documents.some(doc => doc
                                     .doc_type_id ===
+                                    'DC7')) {
+                                html +=
+                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show"></i></a>`;
+                            } else if (row.documents && row.documents.some(doc => doc
+                                    .doc_type_id ===
+                                    'DC6')) {
+                                html +=
+                                    `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show"></i></a>
+                                <a class="badge badge-center rounded-pill bg-success" title="Unggah Laporan Akhir" href="{{ url('user-proposals/final-report/${row.id}') }}"><i class="bx bx-upload"></i></a>`;
+                            } else if (row.documents && row.documents.some(doc => doc
+                                    .doc_type_id ===
                                     'DC5')) {
                                 html +=
                                     `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('user-proposals/show/${row.id}') }}"><i class="bx bx-show"></i></a>`;
@@ -556,7 +567,7 @@
                                     </ul>`;
                             } else if (row.status_id === 'S05') {
                                 html =
-                                `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
+                                    `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
                                         <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
                                             <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('user-proposals/show/${row.id}') }}">
                                                 <i class="bx bx-show" style="color:#ffff"></i>
@@ -565,7 +576,7 @@
                                     </ul>`;
                             } else if (row.mark_as_revised) {
                                 html =
-                                `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
+                                    `<ul class="list-unstyled users-list m-0 avatar-group d-flex justify-content-center align-items-center gap-2">
                                         <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Show">
                                             <a class="badge badge-center rounded-pill bg-warning mb-2" href="{{ url('user-proposals/show/${row.id}') }}">
                                                 <i class="bx bx-show" style="color:#ffff"></i>
@@ -804,11 +815,11 @@
                 'S02': ['#Step-1'],
                 'S03': ['#Step-1'],
                 'S05': ['#Step-1'],
-                'S06': ['#Step-1', '#Step-2'],
-                'S07': ['#Step-1', '#Step-2', '#Step-3'],
+                'S06': ['#Step-1', '#Step-2', '#Step-3'],
+                'S07': ['#Step-1', '#Step-2', '#Step-3', '#Step-4'],
                 'S08': ['#Step-1', '#Step-2', '#Step-3', '#Step-4'],
-                'S09': ['#Step-1', '#Step-2', '#Step-3', '#Step-4'],
-                'S10': ['#Step-1', '#Step-2', '#Step-3', '#Step-4', '#Step-5']
+                'S09': ['#Step-1', '#Step-2', '#Step-3', '#Step-4', '#Step-5'],
+                'S10': ['#Step-1', '#Step-2', '#Step-3', '#Step-4', '#Step-5', '#Step-6'],
             };
 
             function setStepStatus(status) {

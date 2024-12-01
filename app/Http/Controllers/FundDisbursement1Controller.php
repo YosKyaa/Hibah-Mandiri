@@ -48,8 +48,8 @@ class FundDisbursement1Controller extends Controller
         ])
         ->select('*')
         ->whereHas('statuses', function ($query) {
-            $query->where('id', 'S01',)
-            ->orWhere('id', 'S02');
+            $query->where('id', 'S07',)
+            ->orWhere('id', 'S09');
         })
         ->orderBy('id');
         return DataTables::of($data)

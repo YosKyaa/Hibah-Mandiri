@@ -130,9 +130,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'fund-disbursement-2'], function () { //FinalisasiDanas
         Route::any('/', [FundDisbursement2Controller::class, 'index'])->name('fund-disbursement-2.index')->middleware('auth');
         Route::get('/data', [FundDisbursement2Controller::class, 'data'])->name('fund-disbursement-2.data');
-        Route::post('/approve', [FundDisbursement2Controller::class, 'approve'])->name('fund-disbursement-2.approve');
+        Route::get('/transfer_receipt/{id}', [FundDisbursement2Controller::class, 'transfer_receipt'])->name('fund-disbursement-2.transfer_receipt');
+        Route::put('/transfer_receipt_update/{id}', [FundDisbursement2Controller::class, 'transfer_receipt_update'])->name('fund-disbursement-2.transfer_receipt_update');
     });
-
     Route::group(['prefix' => 'loa'], function () { //Loa
         Route::any('/', [LoaController::class, 'index'])->name('loa.index')->middleware('auth');
         Route::get('/data', [LoaController::class, 'data'])->name('loa.data');

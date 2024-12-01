@@ -135,10 +135,10 @@
                 </a>
             </li> --}}
             <!-- <li class="nav-item">
-                                            <a type="button" class="nav-link" data-bs-target="#loa" href="../admin/loa">
-                                                <i class="tf-icons bx bx-task me-1"></i> LoA & Kontrak
-                                            </a>
-                                        </li> -->
+                                                            <a type="button" class="nav-link" data-bs-target="#loa" href="../admin/loa">
+                                                                <i class="tf-icons bx bx-task me-1"></i> LoA & Kontrak
+                                                            </a>
+                                                        </li> -->
             <li class="nav-item">
                 <a type="button" class="nav-link active" data-bs-target="#fund-disbursement-1"
                     href="../admin/fund-disbursement-1">
@@ -181,7 +181,7 @@
             </div>
             <!-- <div class="tab-pane fade" id="loa" role="tabpanel">
 
-                                        </div> -->
+                                                        </div> -->
             <div class="tab-pane fade" id="monev" role="tabpanel">
 
             </div>
@@ -302,7 +302,7 @@
                     url: "{{ asset('assets/vendor/libs/datatables/id.json') }}"
                 },
                 ajax: {
-                    url: "{{ route('proposals.data') }}",
+                    url: "{{ route('fund-disbursement-1.data') }}",
                     data: function(d) {
                         d.search = $('#datatable_filter input[type="search"]').val()
                     },
@@ -345,7 +345,8 @@
                             var html = "";
                             if (row.documents && row.documents.some(doc => doc
                                     .doc_type_id ===
-                                    'DC3')) {
+                                    'DC3' || row.status_id === 'S08' || row.status_id === 'S09' ||
+                                    row.status_id === 'S10' || row.bank_id === null)) {
                                 html =
                                     `<a class="badge badge-center rounded-pill bg-warning" title="Show" href="{{ url('admin/proposals/show/${row.id}') }}"><i class="bx bx-show" style="color:#ffff"></i></a>`;
                             } else {

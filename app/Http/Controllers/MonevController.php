@@ -109,7 +109,9 @@ class MonevController extends Controller
         $proposals = Proposal::findOrFail($id);
         $documentPath = $proposals->documents->where('doc_type_id', 'DC5')->first()->proposal_doc;
         $documentUrl = url($documentPath);
-        return view('headoflppm.monev.review', compact('proposals', 'documentUrl', 'documentPath'));
+        $pdfFilePath = url('storage/formtemplate/form_review_monev.pdf');
+        // $pdfFilePath = str_replace('form_review_hibah.pdf', 'form_penilaian_monev.pdf', $pdfFilePath);
+        return view('headoflppm.monev.review', compact('proposals', 'documentUrl', 'documentPath', 'pdfFilePath'));
     }
     public function update(Request $request, $id)
     {
@@ -144,13 +146,13 @@ class MonevController extends Controller
             $proposals = Proposal::findOrFail($id);
             $proposals->update([
                 'status_id' => 'S08',
-                'notes' => $request->notes,
+                'monev_review' => $request->notes,
             ]);
 
             Documents::create([
                 'proposals_id' => $proposals->id,
                 'proposal_doc' => $fileName,
-                'doc_type_id' => 'DC7',
+                'doc_type_id' => 'DC6',
                 'created_by' => Auth::user()->id,
             ]);
 

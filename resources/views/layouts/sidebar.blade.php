@@ -158,12 +158,12 @@
                         <div>Monev</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->segment(2) == 'pa' ? 'active' : '' }}">
+                {{-- <li class="menu-item {{ request()->segment(2) == 'pa' ? 'active' : '' }}">
                     <a href="{{ route('monev.index') }}" class="menu-link">
 
                         <div>Verifikasi Monev</div>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </li>
         @can('manage_admin')

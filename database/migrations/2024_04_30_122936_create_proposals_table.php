@@ -69,6 +69,8 @@ return new class extends Migration
 
             $table->boolean('verif_monev')->default(false);
 
+            $table->text('monev_review')->nullable();
+
             // $table->boolean('mark_as_presented')->nullable();
 
             // $table->boolean('approval_vice_rector_1')->default(false);

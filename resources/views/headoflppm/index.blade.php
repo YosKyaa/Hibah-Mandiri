@@ -154,8 +154,8 @@
                                     <th>Kategori</th>
                                     <th style="width: 10%;">TKT</th>
                                     <th style="width: 10%;">Target Utama Riset</th>
-                                    <th>Status</th>
-                                    <th data-priority="4"></th>
+                                    <th data-priority="4">Status</th>
+                                    {{-- <th data-priority="4"></th> --}}
                                     <th data-priority="2" style="width: 10%;">Aksi</th>
                                 </tr>
                             </thead>
@@ -370,28 +370,34 @@
 
                     {
                         render: function(data, type, row, meta) {
-                            var html =
-                                `<span class="badge rounded-pill bg-label-${row.statuses.color}">
+                            var html = `<span class="badge rounded-pill bg-label-${row.statuses.color} mb-1">
                                 <span class="badge badge-dot bg-${row.statuses.color} me-1"></span>${row.statuses.status} </span>`;
-                            return html;
-                        }
-                    },
-                    {
-                        render: function(data, type, row, meta) {
-                            var html = '';
                             if (row.is_recommended === null) {
-                                html =
-                                    '<span class="badge rounded-pill bg-label-secondary">Menunggu Review</span>';
+                                html += '<span class="badge rounded-pill bg-label-secondary">Menunggu Review</span>';
                             } else if (row.is_recommended === true || row.is_recommended === 1) {
-                                html =
-                                    '<span class="badge rounded-pill bg-label-success">Rekomendasi</span>';
+                                html += '<span class="badge rounded-pill bg-label-success">Rekomendasi</span>';
                             } else if (row.is_recommended === false || row.is_recommended === 0) {
-                                html =
-                                    '<span class="badge rounded-pill bg-label-danger">Tidak Di Rekomendasi</span>';
+                                html += '<span class="badge rounded-pill bg-label-danger">Tidak Di Rekomendasi</span>';
                             }
                             return html;
                         }
                     },
+                    // {
+                    //     render: function(data, type, row, meta) {
+                    //         var html = '';
+                    //         if (row.is_recommended === null) {
+                    //             html =
+                    //                 '<span class="badge rounded-pill bg-label-secondary">Menunggu Review</span>';
+                    //         } else if (row.is_recommended === true || row.is_recommended === 1) {
+                    //             html =
+                    //                 '<span class="badge rounded-pill bg-label-success">Rekomendasi</span>';
+                    //         } else if (row.is_recommended === false || row.is_recommended === 0) {
+                    //             html =
+                    //                 '<span class="badge rounded-pill bg-label-danger">Tidak Di Rekomendasi</span>';
+                    //         }
+                    //         return html;
+                    //     }
+                    // },
                     {
                         render: function(data, type, row, meta) {
                             var html = '';
